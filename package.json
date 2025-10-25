@@ -4,6 +4,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:blog": "turbo run dev --filter=blog",
+    "dev:cms": "turbo run dev --filter=cms",
+    "dev:portfolio": "turbo run dev --filter=portfolio",
+    "storybook": "turbo run storybook --filter=@repo/ui",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

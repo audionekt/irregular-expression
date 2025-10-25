@@ -1,7 +1,11 @@
 {
-  "extends": "../config-typescript/react-library.json",
+  "extends": "./base.json",
   "compilerOptions": {
-    "rootDir": "./src"
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "composite": true
   },
   "include": [
     "src/**/*"
