@@ -22,6 +22,8 @@ const config: StorybookConfig = {
       ...config.resolve.alias,
       '@repo/styles': path.resolve(__dirname, '../../styles/src'),
       '@repo/tokens': path.resolve(__dirname, '../../tokens/src'),
+      // Mock Next.js font imports for Storybook
+      'next/font/google': path.resolve(__dirname, './mocks/next-font-google.js'),
     };
 
     // Add PostCSS support for Tailwind
