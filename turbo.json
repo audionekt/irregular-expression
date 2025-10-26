@@ -9,6 +9,16 @@
       "persistent": true
     },
     "lint": {},
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "cache": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "cache": true
+    },
     "storybook": {
       "cache": false,
       "persistent": true
