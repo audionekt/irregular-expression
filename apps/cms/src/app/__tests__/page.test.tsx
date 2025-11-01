@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Home from '../page';
 
-// Mock the @repo/ui Button component to avoid Next.js font issues in tests
-jest.mock('@repo/ui', () => ({
+// Mock the aurigami Button component to avoid Next.js font issues in tests
+jest.mock('aurigami', () => ({
   Button: ({ children, ...props }: any) => (
     <button {...props}>{children}</button>
   ),

@@ -14,7 +14,7 @@
   "dependencies": {
     "@repo/styles": "workspace:*",
     "@repo/tokens": "workspace:*",
-    "@repo/ui": "workspace:*",
+    "aurigami": "workspace:*",
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"

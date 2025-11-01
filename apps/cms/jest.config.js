@@ -17,7 +17,7 @@ module.exports = {
   // Module resolution
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@repo/ui$': '<rootDir>/../../packages/ui/src/index.ts',
+    '^aurigami$': '<rootDir>/../../packages/ui/src/index.ts',
     '^@repo/styles$': '<rootDir>/../../packages/styles/src/index.ts',
     '^@repo/styles/(.*)$': '<rootDir>/../../packages/styles/src/$1',
     '^@repo/tokens$': '<rootDir>/../../packages/tokens/src/index.ts',

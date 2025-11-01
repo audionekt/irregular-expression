@@ -4,18 +4,19 @@ import path from 'path';
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-  outputFileTracingRoot: '/Users/arunravishankar/portfolio-monorepo',
-  transpilePackages: ['@repo/ui', '@repo/styles', '@repo/tokens'],
+  outputFileTracingRoot: path.resolve(__dirname, '../..'),
+  transpilePackages: ['aurigami', '@repo/styles', '@repo/tokens'],
   experimental: {
     externalDir: true,
   },
   webpack: (config) => {
-    // Add alias for workspace packages
+    // Add alias for workspace packages to resolve from source
     config.resolve.alias = {
       ...config.resolve.alias,
       '@repo/styles': path.resolve(__dirname, '../../packages/styles/src'),
       '@repo/tokens': path.resolve(__dirname, '../../packages/tokens/src'),
-      '@repo/ui': path.resolve(__dirname, '../../packages/ui/src'),
+      'aurigami/layout': path.resolve(__dirname, '../../packages/ui/src/layout.ts'),
+      'aurigami': path.resolve(__dirname, '../../packages/ui/src'),
     };
     
     return config;

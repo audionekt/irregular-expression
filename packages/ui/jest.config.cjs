@@ -36,6 +36,7 @@ module.exports = {
     '/dist/',
     '/build/',
     '\\.stories\\.(ts|tsx)$', // Exclude Storybook files
+    'src/utils/layout\\.test\\.tsx$', // Exclude layout tests (Next.js specific)
   ],
   
   // Coverage configuration
@@ -44,6 +45,8 @@ module.exports = {
     '!src/**/*.stories.{ts,tsx}', // Exclude Storybook files
     '!src/**/index.{ts,tsx}',     // Exclude barrel exports
     '!src/**/*.d.ts',              // Exclude type definitions
+    '!src/utils/layout.tsx',      // Exclude Layout (Next.js specific)
+    '!src/layout.ts',             // Exclude layout barrel export
   ],
   
   // Coverage thresholds - enforcing good test coverage

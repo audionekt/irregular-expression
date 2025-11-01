@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AppLayout } from "@repo/ui";
+import { Layout } from "aurigami/layout";
 import "@repo/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -12,5 +12,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <AppLayout>{children}</AppLayout>;
+  return <Layout>{children}</Layout>;
 }

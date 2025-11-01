@@ -1,5 +1,21 @@
 {
-  "extends": "../../packages/config-typescript/nextjs.json",
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "aurigami": ["../../packages/ui/src/index.ts"],
+      "aurigami/*": ["../../packages/ui/src/*"],
+      "@repo/styles": ["../../packages/styles/src/index.ts"],
+      "@repo/styles/*": ["../../packages/styles/src/*"],
+      "@repo/tokens": ["../../packages/tokens/src/index.ts"],
+      "@repo/tokens/*": ["../../packages/tokens/src/*"]
+    }
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
