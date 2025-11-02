@@ -17,6 +17,7 @@ import {
 } from 'aurigami';
 import { useCreateBlogPost, useTags, PostStatus } from '@repo/api';
 import type { CreateBlogPostRequest } from '@repo/api';
+import * as styles from './page.css';
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -68,33 +69,33 @@ export default function NewPostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className={styles.container}>
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+      <div className={styles.header}>
+        <div className={styles.headerInner}>
+          <div className={styles.headerContent}>
+            <div className={styles.headerLeft}>
               <Button
                 variant="ghost"
                 size="md"
                 onClick={() => router.back()}
                 leftIcon={
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 }
               >
                 Back
               </Button>
-              <div>
+              <div className={styles.headerTitles}>
                 <Typography variant="h2">Create New Post</Typography>
-                <Typography variant="caption" className="text-gray-600 dark:text-gray-400">
+                <Typography variant="caption">
                   Fill in the details below to publish your blog post
                 </Typography>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className={styles.headerRight}>
               <Chip variant={formData.status === PostStatus.PUBLISHED ? 'default' : 'outlined'}>
                 {formData.status === PostStatus.PUBLISHED ? '✅ Published' : '📄 Draft'}
               </Chip>
@@ -104,12 +105,12 @@ export default function NewPostPage() {
       </div>
 
       {/* Form */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className={styles.formContainer}>
         <Form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className={styles.formGrid}>
             {/* Main Content - 2/3 width */}
-            <div className="lg:col-span-2 space-y-6">
-              <Card>
+            <div className={styles.mainColumn}>
+              <Card padding="md">
                 <FormSection
                   title="Post Content"
                   description="Write your blog post content here"
@@ -123,7 +124,7 @@ export default function NewPostPage() {
                     required
                     fullWidth
                     leftIcon={
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                       </svg>
                     }
@@ -137,7 +138,7 @@ export default function NewPostPage() {
                     helper="URL-friendly version of the title (auto-generated if left empty)"
                     fullWidth
                     leftIcon={
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                     }
@@ -204,8 +205,8 @@ export default function NewPostPage() {
             </div>
 
             {/* Sidebar - 1/3 width */}
-            <div className="space-y-6">
-              <Card>
+            <div className={styles.sidebar}>
+              <Card padding="md">
                 <FormSection title="Publish Settings">
                   <Select
                     label="Status"
@@ -219,29 +220,58 @@ export default function NewPostPage() {
                     fullWidth
                   />
 
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <div>
-                      <Typography variant="p" className="font-medium mb-1">
+                  <div className={styles.featuredToggle}>
+                    <div className={styles.toggleText}>
+                      <Typography variant="p" style={{ fontWeight: 500, marginBottom: '0.25rem' }}>
                         Featured Post
                       </Typography>
-                      <Typography variant="caption" className="text-gray-600 dark:text-gray-400">
+                      <Typography variant="caption">
                         Show on homepage
                       </Typography>
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
+                    <label className={styles.toggleSwitch}>
                       <input
                         type="checkbox"
-                        className="sr-only peer"
                         checked={formData.featured}
                         onChange={(e) => handleInputChange('featured', e.target.checked)}
+                        style={{
+                          position: 'absolute',
+                          width: '1px',
+                          height: '1px',
+                          padding: 0,
+                          margin: '-1px',
+                          overflow: 'hidden',
+                          clip: 'rect(0, 0, 0, 0)',
+                          whiteSpace: 'nowrap',
+                          borderWidth: 0,
+                        }}
                       />
-                      <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <div style={{
+                        width: '2.75rem',
+                        height: '1.5rem',
+                        backgroundColor: formData.featured ? '#2563eb' : '#d1d5db',
+                        borderRadius: '9999px',
+                        position: 'relative',
+                        transition: 'background-color 0.2s',
+                      }}>
+                        <div style={{
+                          position: 'absolute',
+                          top: '2px',
+                          left: formData.featured ? 'calc(100% - 1.25rem - 2px)' : '2px',
+                          width: '1.25rem',
+                          height: '1.25rem',
+                          backgroundColor: 'white',
+                          border: formData.featured ? '1px solid white' : '1px solid #d1d5db',
+                          borderRadius: '9999px',
+                          transition: 'left 0.2s',
+                        }}></div>
+                      </div>
                     </label>
                   </div>
                 </FormSection>
               </Card>
 
-              <Card>
+              <Card padding="md">
                 <FormSection title="Tags" description="Categorize your post">
                   <Select
                     label="Select Tags"
@@ -263,14 +293,14 @@ export default function NewPostPage() {
                   />
 
                   {formData.tagIds && formData.tagIds.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className={styles.tagsContainer}>
                       {formData.tagIds.map((tagId) => {
                         const tag = tagsData?.content.find((t) => t.id === tagId);
                         return tag ? (
                           <Chip
                             key={tagId}
                             variant="default"
-                            className="cursor-pointer"
+                            style={{ cursor: 'pointer' }}
                             onClick={() => {
                               handleInputChange(
                                 'tagIds',
@@ -287,9 +317,9 @@ export default function NewPostPage() {
                 </FormSection>
               </Card>
 
-              <Card>
+              <Card padding="md">
                 <FormSection title="Featured Image">
-                  <div className="space-y-4">
+                  <div className={styles.imageSection}>
                     <Input
                       label="Image URL"
                       placeholder="https://..."
@@ -298,18 +328,18 @@ export default function NewPostPage() {
                       helper="URL of the featured image"
                       fullWidth
                       leftIcon={
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       }
                     />
 
                     {formData.featuredImageUrl && (
-                      <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+                      <div className={styles.imagePreview}>
                         <img
                           src={formData.featuredImageUrl}
                           alt="Featured preview"
-                          className="w-full h-full object-cover"
+                          className={styles.previewImage}
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                           }}
@@ -323,7 +353,7 @@ export default function NewPostPage() {
           </div>
 
           {/* Form Actions */}
-          <Card className="sticky bottom-4 shadow-lg">
+          <Card padding="md" className={styles.formActionsCard}>
             <FormActions align="between">
               <Button
                 type="button"
@@ -333,7 +363,7 @@ export default function NewPostPage() {
                 Cancel
               </Button>
               
-              <div className="flex items-center gap-3">
+              <div className={styles.formActionsButtons}>
                 <Button
                   type="button"
                   variant="secondary"
@@ -341,9 +371,9 @@ export default function NewPostPage() {
                     handleInputChange('status', PostStatus.DRAFT);
                     setTimeout(handleSubmit, 0);
                   }}
-                  isLoading={createPost.isPending}
+                  loading={createPost.isPending}
                   leftIcon={
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   }
@@ -354,9 +384,9 @@ export default function NewPostPage() {
                 <Button
                   type="submit"
                   variant="success"
-                  isLoading={createPost.isPending}
+                  loading={createPost.isPending}
                   leftIcon={
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                   }

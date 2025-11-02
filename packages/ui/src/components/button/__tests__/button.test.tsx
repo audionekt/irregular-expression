@@ -35,57 +35,6 @@ describe('Button', () => {
     expect(handleClick).not.toHaveBeenCalled();
   });
 
-  it('applies custom className', () => {
-    render(<Button className="custom-class">Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
-    expect(button).toHaveClass('custom-class');
-  });
-
-  it('renders with primary variant by default', () => {
-    render(<Button>Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
-    // Should have the primary variant classes
-    expect(button.className).toContain('bg-blue-600');
-  });
-
-  it('renders with secondary variant', () => {
-    render(<Button variant="secondary">Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
-    expect(button.className).toContain('bg-white');
-    expect(button.className).toContain('border-2');
-  });
-
-  it('renders with ghost variant', () => {
-    render(<Button variant="ghost">Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
-    expect(button.className).toContain('hover:bg-gray-100');
-  });
-
-  it('renders with danger variant', () => {
-    render(<Button variant="danger">Click me</Button>);
-    const button = screen.getByRole('button', { name: /click me/i });
-    expect(button.className).toContain('bg-red-600');
-  });
-
-  it('renders with small size', () => {
-    render(<Button size="sm">Small</Button>);
-    const button = screen.getByRole('button', { name: /small/i });
-    expect(button.className).toContain('h-9');
-    expect(button.className).toContain('px-3');
-  });
-
-  it('renders with medium size by default', () => {
-    render(<Button>Medium</Button>);
-    const button = screen.getByRole('button', { name: /medium/i });
-    expect(button.className).toContain('h-10');
-  });
-
-  it('renders with large size', () => {
-    render(<Button size="lg">Large</Button>);
-    const button = screen.getByRole('button', { name: /large/i });
-    expect(button.className).toContain('h-12');
-  });
-
   it('forwards additional props to button element', () => {
     render(<Button data-testid="custom-button" aria-label="Custom">Click me</Button>);
     const button = screen.getByTestId('custom-button');

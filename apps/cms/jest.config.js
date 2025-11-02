@@ -21,8 +21,9 @@ module.exports = {
     '^@repo/styles$': '<rootDir>/../../packages/styles/src/index.ts',
     '^@repo/styles/(.*)$': '<rootDir>/../../packages/styles/src/$1',
     '^@repo/tokens$': '<rootDir>/../../packages/tokens/src/index.ts',
-    // Handle CSS imports
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    // Handle vanilla-extract CSS imports
+    '\\.(css)\\.ts$': '<rootDir>/../../packages/ui/src/__mocks__/styleMock.cjs',
+    '\\.(css)$': '<rootDir>/../../packages/ui/src/__mocks__/styleMock.cjs',
   },
   
   // Test file patterns
@@ -42,6 +43,7 @@ module.exports = {
   // Coverage configuration
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
+    '!src/**/*.css.ts',            // Exclude vanilla-extract CSS files
     '!src/app/**/layout.tsx',      // Exclude Next.js root layouts
     '!src/**/*.d.ts',              // Exclude type definitions
     '!src/**/__tests__/**',        // Exclude test files

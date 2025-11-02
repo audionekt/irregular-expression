@@ -1,10 +1,12 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './select.css';
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
   helper?: string;
+  state?: 'default' | 'error' | 'success';
   fullWidth?: boolean;
   options: Array<{ value: string; label: string; disabled?: boolean }>;
   placeholder?: string;
@@ -16,6 +18,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       label,
       error,
       helper,
+      state,
       fullWidth,
       options,
       placeholder,
@@ -27,32 +30,24 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     ref
   ) => {
     const selectId = id || `select-${React.useId()}`;
+    const selectState = error ? 'error' : state || 'default';
 
     return (
-      <div className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
+      <div className={cn(styles.wrapper, fullWidth && styles.fullWidth)}>
         {label && (
-          <label
-            htmlFor={selectId}
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor={selectId} className={styles.label}>
             {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
+            {props.required && <span className={styles.required}>*</span>}
           </label>
         )}
 
-        <div className="relative">
+        <div className={styles.selectWrapper}>
           <select
             ref={ref}
             id={selectId}
             className={cn(
-              'flex h-10 w-full appearance-none rounded-lg border-2 bg-white px-3 py-2 text-sm pr-10',
-              'transition-all duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-              'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
-              'dark:bg-gray-900 dark:border-gray-700 dark:text-white',
-              error
-                ? 'border-red-300 focus:ring-red-500'
-                : 'border-gray-300 hover:border-gray-400',
+              styles.select,
+              styles.inputStates[selectState],
               className
             )}
             disabled={disabled}
@@ -78,31 +73,25 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
 
-          {/* Dropdown arrow */}
-          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
+          <svg
+            className={styles.dropdownIcon}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
 
         {error && (
-          <p
-            id={`${selectId}-error`}
-            className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
-          >
+          <p id={`${selectId}-error`} className={cn(styles.message, styles.errorMessage)}>
             <svg
-              className="h-4 w-4 flex-shrink-0"
+              className={styles.errorIcon}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -117,7 +106,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         )}
 
         {helper && !error && (
-          <p id={`${selectId}-helper`} className="text-sm text-gray-500 dark:text-gray-400">
+          <p id={`${selectId}-helper`} className={cn(styles.message, styles.helperMessage)}>
             {helper}
           </p>
         )}
@@ -127,4 +116,3 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 );
 
 Select.displayName = 'Select';
-

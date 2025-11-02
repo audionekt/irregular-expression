@@ -17,10 +17,13 @@ module.exports = {
   // Module resolution
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@repo/tokens$': '<rootDir>/../tokens/src/index.ts',
+    '^@repo/tokens/(.*)$': '<rootDir>/../tokens/src/$1',
     '^@repo/styles$': '<rootDir>/../styles/src/index.ts',
     '^@repo/styles/(.*)$': '<rootDir>/../styles/src/$1',
-    // Handle CSS imports (Tailwind, CSS modules, etc.)
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    // Handle vanilla-extract CSS imports - order matters! .css.ts must come first
+    '\\.(css)\\.ts$': '<rootDir>/src/__mocks__/styleMock.cjs',
+    '\\.(css)$': '<rootDir>/src/__mocks__/styleMock.cjs',
   },
   
   // Test file patterns
@@ -43,6 +46,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.stories.{ts,tsx}', // Exclude Storybook files
+    '!src/**/*.css.ts',           // Exclude vanilla-extract files
     '!src/**/index.{ts,tsx}',     // Exclude barrel exports
     '!src/**/*.d.ts',              // Exclude type definitions
     '!src/utils/layout.tsx',      // Exclude Layout (Next.js specific)

@@ -1,5 +1,6 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './form.css';
 
 export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ export const Form = React.forwardRef<HTMLFormElement, FormProps>(
       <form
         ref={ref}
         onSubmit={handleSubmit}
-        className={cn('space-y-6', className)}
+        className={cn(styles.form, className)}
         {...props}
       >
         {children}
@@ -43,22 +44,14 @@ export const FormSection: React.FC<FormSectionProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn(styles.formSection, className)}>
       {(title || description) && (
-        <div className="space-y-1">
-          {title && (
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {title}
-            </h3>
-          )}
-          {description && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {description}
-            </p>
-          )}
+        <div className={styles.formSectionHeader}>
+          {title && <h3 className={styles.formSectionTitle}>{title}</h3>}
+          {description && <p className={styles.formSectionDescription}>{description}</p>}
         </div>
       )}
-      <div className="space-y-4">{children}</div>
+      <div className={styles.formSectionContent}>{children}</div>
     </div>
   );
 };
@@ -75,15 +68,8 @@ export const FormGrid: React.FC<FormGridProps> = ({
   columns = 2,
   className,
 }) => {
-  const gridCols = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-  }[columns];
-
   return (
-    <div className={cn('grid gap-4', gridCols, className)}>
+    <div className={cn(styles.formGrid, styles.gridColumns[columns], className)}>
       {children}
     </div>
   );
@@ -101,17 +87,9 @@ export const FormActions: React.FC<FormActionsProps> = ({
   align = 'right',
   className,
 }) => {
-  const alignClass = {
-    left: 'justify-start',
-    center: 'justify-center',
-    right: 'justify-end',
-    between: 'justify-between',
-  }[align];
-
   return (
-    <div className={cn('flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-800', alignClass, className)}>
+    <div className={cn(styles.formActions, styles.formActionsAlign[align], className)}>
       {children}
     </div>
   );
 };
-

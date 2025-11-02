@@ -3,6 +3,7 @@
 import { Typography, Button, Card, Chip, Avatar } from "aurigami";
 import { useBlogPosts, PostStatus } from "@repo/api";
 import { useRouter } from 'next/navigation';
+import * as styles from './page.css';
 
 export default function PostsPage() {
   const router = useRouter();
@@ -12,23 +13,23 @@ export default function PostsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className={styles.container}>
       {/* Header */}
-      <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <Typography variant="h1" className="mb-2">
+      <div className={styles.header}>
+        <div className={styles.headerInner}>
+          <div className={styles.headerTop}>
+            <div className={styles.headerTitles}>
+              <Typography variant="h1">
                 Content Management
               </Typography>
-              <Typography variant="p" className="text-gray-600 dark:text-gray-400">
+              <Typography variant="p">
                 Manage your blog posts and content
               </Typography>
             </div>
             <Button
               size="lg"
               leftIcon={
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               }
@@ -39,24 +40,21 @@ export default function PostsPage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+          <div className={styles.statsGrid}>
             {[
               { label: 'Total Posts', value: data?.totalElements || 0, icon: '📝' },
               { label: 'Published', value: data?.content.filter(p => p.status === 'PUBLISHED').length || 0, icon: '✅' },
               { label: 'Drafts', value: data?.content.filter(p => p.status === 'DRAFT').length || 0, icon: '📄' },
               { label: 'Featured', value: data?.content.filter(p => p.featured).length || 0, icon: '⭐' },
             ].map((stat, i) => (
-              <div
-                key={i}
-                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{stat.icon}</span>
-                  <div>
-                    <Typography variant="caption" className="text-gray-600 dark:text-gray-400">
+              <div key={i} className={styles.statCard}>
+                <div className={styles.statContent}>
+                  <span className={styles.statIcon}>{stat.icon}</span>
+                  <div className={styles.statText}>
+                    <Typography variant="caption">
                       {stat.label}
                     </Typography>
-                    <Typography variant="h2" className="text-2xl">
+                    <Typography variant="h2">
                       {stat.value}
                     </Typography>
                   </div>
@@ -68,12 +66,12 @@ export default function PostsPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className={styles.content}>
         {isLoading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <Typography variant="p" className="text-gray-600 dark:text-gray-400">
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingInner}>
+              <div className={styles.spinner}></div>
+              <Typography variant="p">
                 Loading posts...
               </Typography>
             </div>
@@ -81,16 +79,16 @@ export default function PostsPage() {
         )}
 
         {error && (
-          <Card className="p-6 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-            <div className="flex items-center gap-3">
-              <svg className="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <Card padding="md">
+            <div className={styles.statContent}>
+              <svg className={styles.errorIcon} fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
               </svg>
               <div>
-                <Typography variant="h3" className="text-red-900 dark:text-red-200 mb-1">
+                <Typography variant="h3">
                   Error loading posts
                 </Typography>
-                <Typography variant="p" className="text-red-700 dark:text-red-300">
+                <Typography variant="p">
                   {error.message}
                 </Typography>
               </div>
@@ -99,20 +97,20 @@ export default function PostsPage() {
         )}
 
         {data && data.content.length === 0 && (
-          <Card className="p-12 text-center">
-            <div className="max-w-md mx-auto">
-              <div className="text-6xl mb-4">📝</div>
-              <Typography variant="h2" className="mb-3">
+          <Card padding="lg">
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>📝</div>
+              <Typography variant="h2">
                 No posts yet
               </Typography>
-              <Typography variant="p" className="text-gray-600 dark:text-gray-400 mb-6">
+              <Typography variant="p" style={{ margin: '1rem 0 1.5rem' }}>
                 Get started by creating your first blog post. Share your thoughts, ideas, and stories with the world.
               </Typography>
               <Button
                 size="lg"
                 onClick={() => router.push('/posts/new')}
                 leftIcon={
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 }
@@ -124,21 +122,23 @@ export default function PostsPage() {
         )}
 
         {data && data.content.length > 0 && (
-          <div className="space-y-4">
+          <div className={styles.postsList}>
             {data.content.map((post) => (
               <Card
                 key={post.id}
-                className="hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+                padding="md"
+                interactive
+                className={styles.postCard}
                 onClick={() => router.push(`/posts/${post.id}`)}
               >
-                <div className="flex items-start justify-between gap-6">
+                <div className={styles.postContent}>
                   {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Typography variant="h2" className="truncate">
+                  <div className={styles.postMain}>
+                    <div className={styles.postHeader}>
+                      <Typography variant="h2" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {post.title}
                       </Typography>
-                      <div className="flex items-center gap-2 flex-shrink-0">
+                      <div className={styles.postBadges}>
                         {post.featured && (
                           <Chip variant="featured" size="md">
                             ⭐ Featured
@@ -154,13 +154,13 @@ export default function PostsPage() {
                     </div>
 
                     {post.excerpt && (
-                      <Typography variant="p" className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                      <Typography variant="p" style={{ marginBottom: '1rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {post.excerpt}
                       </Typography>
                     )}
 
-                    <div className="flex flex-wrap items-center gap-4 text-sm">
-                      <div className="flex items-center gap-2">
+                    <div className={styles.postMeta}>
+                      <div className={styles.metaItem}>
                         <Avatar
                           src={post.author.avatarUrl}
                           alt={`${post.author.firstName} ${post.author.lastName}`}
@@ -171,16 +171,16 @@ export default function PostsPage() {
                         </Typography>
                       </div>
 
-                      <Typography variant="caption" className="text-gray-400">•</Typography>
+                      <Typography variant="caption">•</Typography>
                       
-                      <Typography variant="caption" className="text-gray-600 dark:text-gray-400">
+                      <Typography variant="caption">
                         👁️ {post.viewCount.toLocaleString()} views
                       </Typography>
 
                       {post.readingTimeMinutes && (
                         <>
-                          <Typography variant="caption" className="text-gray-400">•</Typography>
-                          <Typography variant="caption" className="text-gray-600 dark:text-gray-400">
+                          <Typography variant="caption">•</Typography>
+                          <Typography variant="caption">
                             ⏱️ {post.readingTimeMinutes} min read
                           </Typography>
                         </>
@@ -188,8 +188,8 @@ export default function PostsPage() {
 
                       {post.tags.length > 0 && (
                         <>
-                          <Typography variant="caption" className="text-gray-400">•</Typography>
-                          <div className="flex gap-2">
+                          <Typography variant="caption">•</Typography>
+                          <div className={styles.metaTags}>
                             {post.tags.slice(0, 3).map((tag) => (
                               <Chip key={tag.id} size="sm">
                                 {tag.name}
@@ -207,7 +207,7 @@ export default function PostsPage() {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className={styles.postActions}>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -216,7 +216,7 @@ export default function PostsPage() {
                         router.push(`/posts/${post.id}`);
                       }}
                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className={styles.svgIconSm} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                     </Button>

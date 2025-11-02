@@ -2,7 +2,8 @@ import React from 'react';
 import type { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { handlers } from '@repo/api/mocks/handlers';
-import '@repo/styles/globals.css';
+import '../src/styles/global.css';
+import { lightTheme } from '../src/styles/theme.css';
 import './fonts.css';
 
 // Initialize MSW
@@ -26,7 +27,7 @@ const preview: Preview = {
   loaders: [mswLoader],
   decorators: [
     (Story) => (
-      <div>
+      <div className={lightTheme}>
         <Story />
       </div>
     ),
