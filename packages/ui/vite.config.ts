@@ -16,7 +16,7 @@ export default mergeConfig(
           'src/**/*.stories.tsx',
           'src/utils/layout.tsx',  // Exclude Layout (uses Next.js fonts)
         ],
-        rollupTypes: true,
+        rollupTypes: false,
       }),
     ],
     build: {
