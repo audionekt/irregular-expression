@@ -1,94 +1,242 @@
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  content: string; // MDX string
-  status: 'draft' | 'published';
-  publishedAt: string;
-  coverImage?: string;
-  tags: string[];
-  author?: {
-    name: string;
-    avatar?: string;
-  };
+// Enums matching Spring Boot backend
+export enum PostStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  SCHEDULED = 'SCHEDULED',
+  ARCHIVED = 'ARCHIVED'
 }
 
-export interface PortfolioProject {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  content: string; // MDX
-  technologies: string[];
-  coverImage?: string;
-  liveUrl?: string;
-  githubUrl?: string;
-  status: 'draft' | 'published';
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  AUTHOR = 'AUTHOR',
+  EDITOR = 'EDITOR'
+}
+
+export enum MediaType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  DOCUMENT = 'DOCUMENT',
+  AUDIO = 'AUDIO'
+}
+
+// User DTOs
+export interface UserSummaryResponse {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl?: string;
+}
+
+export interface UserResponse {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  bio?: string;
+  avatarUrl?: string;
+  role: UserRole;
+  active: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface ImageUploadResponse {
-  url: string; // CloudFront CDN URL
-  key: string;
-}
-
-export interface AuthResponse {
-  token: string;
-  user: { 
-    id: string; 
-    email: string; 
-    name: string; 
-  };
-}
-
-export interface User {
-  id: string;
+export interface CreateUserRequest {
   email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  bio?: string;
+  avatarUrl?: string;
+  role?: UserRole;
+}
+
+export interface UpdateUserRequest {
+  firstName?: string;
+  lastName?: string;
+  bio?: string;
+  avatarUrl?: string;
+  role?: UserRole;
+  active?: boolean;
+}
+
+// Tag DTOs
+export interface TagSummaryResponse {
+  id: number;
   name: string;
-  avatar?: string;
-  role: 'admin' | 'editor';
+  slug: string;
 }
 
-export interface FetchPostsParams {
-  status?: 'draft' | 'published';
-  tag?: string;
-  limit?: number;
-  offset?: number;
+export interface TagResponse {
+  id: number;
+  name: string;
+  slug: string;
+  postCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface FetchProjectsParams {
-  status?: 'draft' | 'published';
-  technology?: string;
-  limit?: number;
-  offset?: number;
+export interface CreateTagRequest {
+  name: string;
+  slug: string;
 }
 
-export interface CreatePostInput {
+export interface UpdateTagRequest {
+  name?: string;
+  slug?: string;
+}
+
+// Media DTOs
+export interface MediaSummaryResponse {
+  id: number;
+  fileName: string;
+  fileUrl: string;
+  contentType: string;
+  mediaType: MediaType;
+}
+
+export interface MediaResponse {
+  id: number;
+  fileName: string;
+  originalFileName: string;
+  fileUrl: string;
+  contentType: string;
+  fileSize: number;
+  mediaType: MediaType;
+  width?: number;
+  height?: number;
+  altText?: string;
+  caption?: string;
+  uploadedBy?: UserSummaryResponse;
+  uploadedAt: string;
+  updatedAt: string;
+}
+
+export interface UpdateMediaRequest {
+  altText?: string;
+  caption?: string;
+}
+
+// Blog Post DTOs
+export interface BlogPostSummaryResponse {
+  id: number;
   title: string;
-  description: string;
-  content: string;
-  tags: string[];
-  coverImage?: string;
-  status: 'draft' | 'published';
+  slug: string;
+  excerpt?: string;
+  featuredImageUrl?: string;
+  author: UserSummaryResponse;
+  tags: TagSummaryResponse[];
+  status: PostStatus;
+  publishedAt?: string;
+  viewCount: number;
+  readingTimeMinutes?: number;
+  featured: boolean;
+  createdAt: string;
 }
 
-export interface UpdatePostInput extends Partial<CreatePostInput> {
-  id: string;
-}
-
-export interface CreateProjectInput {
+export interface BlogPostResponse {
+  id: number;
   title: string;
-  description: string;
-  content: string;
-  technologies: string[];
-  coverImage?: string;
-  liveUrl?: string;
-  githubUrl?: string;
-  status: 'draft' | 'published';
+  slug: string;
+  excerpt?: string;
+  mdxContent: string;
+  featuredImageUrl?: string;
+  featuredMedia?: MediaSummaryResponse;
+  author: UserSummaryResponse;
+  tags: TagSummaryResponse[];
+  status: PostStatus;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  publishedAt?: string;
+  scheduledAt?: string;
+  viewCount: number;
+  readingTimeMinutes?: number;
+  allowComments: boolean;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface UpdateProjectInput extends Partial<CreateProjectInput> {
-  id: string;
+export interface CreateBlogPostRequest {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  mdxContent: string;
+  featuredImageUrl?: string;
+  featuredMediaId?: number;
+  tagIds?: number[];
+  status?: PostStatus;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  scheduledAt?: string;
+  readingTimeMinutes?: number;
+  allowComments?: boolean;
+  featured?: boolean;
+}
+
+export interface UpdateBlogPostRequest {
+  title?: string;
+  slug?: string;
+  excerpt?: string;
+  mdxContent?: string;
+  featuredImageUrl?: string;
+  featuredMediaId?: number;
+  tagIds?: number[];
+  status?: PostStatus;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  scheduledAt?: string;
+  readingTimeMinutes?: number;
+  allowComments?: boolean;
+  featured?: boolean;
+}
+
+// Query Parameters
+export interface FetchBlogPostsParams {
+  status?: PostStatus;
+  tagId?: number;
+  featured?: boolean;
+  authorId?: number;
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+export interface FetchTagsParams {
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+export interface FetchUsersParams {
+  role?: UserRole;
+  active?: boolean;
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+export interface FetchMediaParams {
+  mediaType?: MediaType;
+  uploadedBy?: number;
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+// Paginated Response
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
 }

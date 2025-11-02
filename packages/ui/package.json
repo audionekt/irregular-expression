@@ -35,20 +35,27 @@
   "dependencies": {
     "@repo/styles": "workspace:*"
   },
+  "optionalDependencies": {
+    "@repo/api": "workspace:*"
+  },
   "devDependencies": {
-    "next": "^15.0.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "@storybook/addon-essentials": "^8.4.0",
     "@storybook/addon-interactions": "^8.4.0",
     "@storybook/addon-links": "^8.4.0",
     "@storybook/react": "^8.4.0",
     "@storybook/react-vite": "^8.4.0",
+    "@tanstack/react-query": "^5.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.21",
+    "axios": "^1.6.0",
+    "msw": "^2.0.0",
+    "msw-storybook-addon": "^2.0.6",
+    "next": "^15.0.0",
     "postcss": "^8.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "storybook": "^8.4.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.0.0",
@@ -63,5 +70,10 @@
     "next": {
       "optional": true
     }
+  },
+  "msw": {
+    "workerDirectory": [
+      ".storybook/public"
+    ]
   }
 }

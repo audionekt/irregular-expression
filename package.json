@@ -10,7 +10,7 @@
     "dev:blog": "turbo run dev --filter=blog",
     "dev:cms": "turbo run dev --filter=cms",
     "dev:portfolio": "turbo run dev --filter=portfolio",
-    "storybook": "turbo run storybook --filter=aurigami",
+    "dev:storybook": "turbo run storybook --filter=aurigami",
     "build:storybook": "turbo run build-storybook --filter=aurigami",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

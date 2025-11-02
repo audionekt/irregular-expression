@@ -7,11 +7,13 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    'msw-storybook-addon',
   ],
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
+  staticDirs: ['./public'],
   viteFinal: async (config) => {
     // Set unique cache directory to avoid conflicts
     config.cacheDir = path.join(__dirname, '../node_modules/.vite-storybook');
@@ -29,6 +31,7 @@ const config: StorybookConfig = {
       ...config.resolve.alias,
       '@repo/styles': path.resolve(__dirname, '../../styles/src'),
       '@repo/tokens': path.resolve(__dirname, '../../tokens/src'),
+      '@repo/api': path.resolve(__dirname, '../../api/src'),
       // Mock Next.js font imports for Storybook
       'next/font/google': path.resolve(__dirname, './mocks/next-font-google.js'),
     };
