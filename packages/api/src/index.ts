@@ -8,5 +8,5 @@ export { apiClient, ApiClient } from './client';
 // React Query hooks
 export * from './hooks';
 
-// MSW setup (for development)
-export * from './mocks/browser';
+// Note: MSW browser setup is exported separately via './mocks' export path
+// Import it explicitly: import { worker } from '@repo/api/mocks';
