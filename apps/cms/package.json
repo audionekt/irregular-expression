@@ -12,9 +12,13 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@repo/api": "workspace:*",
     "@repo/styles": "workspace:*",
     "@repo/tokens": "workspace:*",
+    "@tanstack/react-query": "^5.62.10",
+    "@tanstack/react-query-devtools": "^5.62.10",
     "aurigami": "workspace:*",
+    "axios": "^1.7.9",
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"

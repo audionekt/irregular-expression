@@ -51,7 +51,8 @@ describe('Button', () => {
   it('renders with secondary variant', () => {
     render(<Button variant="secondary">Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
-    expect(button.className).toContain('bg-gray-200');
+    expect(button.className).toContain('bg-white');
+    expect(button.className).toContain('border-2');
   });
 
   it('renders with ghost variant', () => {
@@ -69,7 +70,8 @@ describe('Button', () => {
   it('renders with small size', () => {
     render(<Button size="sm">Small</Button>);
     const button = screen.getByRole('button', { name: /small/i });
-    expect(button.className).toContain('h-8');
+    expect(button.className).toContain('h-9');
+    expect(button.className).toContain('px-3');
   });
 
   it('renders with medium size by default', () => {

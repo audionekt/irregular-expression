@@ -114,15 +114,27 @@ importers:
 
   apps/cms:
     dependencies:
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@repo/styles':
         specifier: workspace:*
         version: link:../../packages/styles
       '@repo/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@tanstack/react-query':
+        specifier: ^5.62.10
+        version: 5.90.6(react@19.2.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.62.10
+        version: 5.90.2(@tanstack/react-query@5.90.6(react@19.2.0))(react@19.2.0)
       aurigami:
         specifier: workspace:*
         version: link:../../packages/ui
+      axios:
+        specifier: ^1.7.9
+        version: 1.13.1
       next:
         specifier: 16.0.0
         version: 16.0.0(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
