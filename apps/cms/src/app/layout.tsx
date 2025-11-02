@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Layout } from "aurigami/layout";
+import { Layout } from "aurigami";
 import "@repo/styles/globals.css";
 
 export const metadata: Metadata = {

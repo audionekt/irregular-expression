@@ -1,193 +1,182 @@
-import { 
-  BlogPost, 
-  PortfolioProject, 
-  ImageUploadResponse, 
-  AuthResponse, 
-  FetchPostsParams, 
-  FetchProjectsParams,
-  CreatePostInput,
-  UpdatePostInput,
-  CreateProjectInput,
-  UpdateProjectInput
-} from './types';
-import { 
-  BlogPostSchema, 
-  PortfolioProjectSchema, 
-  ImageUploadResponseSchema, 
-  AuthResponseSchema,
-  CreatePostInputSchema,
-  UpdatePostInputSchema,
-  CreateProjectInputSchema,
-  UpdateProjectInputSchema
-} from './schemas';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+// Get API base URL from environment variable, default to empty string for MSW
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
-// Blog Posts API
-export async function fetchPosts(params?: FetchPostsParams): Promise<BlogPost[]> {
-  const searchParams = new URLSearchParams();
-  if (params?.status) searchParams.set('status', params.status);
-  if (params?.tag) searchParams.set('tag', params.tag);
-  if (params?.limit) searchParams.set('limit', params.limit.toString());
-  if (params?.offset) searchParams.set('offset', params.offset.toString());
+/**
+ * Generic API Client using Axios
+ * 
+ * This client works seamlessly with both:
+ * - Mock Service Worker (MSW) in development (empty base URL)
+ * - Real backend API in production (configured base URL)
+ * 
+ * MSW intercepts requests at the network level, so axios calls
+ * are automatically mocked when MSW is enabled.
+ */
+class ApiClient {
+  private instance: AxiosInstance;
 
-  const res = await fetch(`${API_BASE_URL}/api/posts?${searchParams}`);
-  if (!res.ok) throw new Error(`Failed to fetch posts: ${res.statusText}`);
-  
-  const data = await res.json();
-  return BlogPostSchema.array().parse(data);
+  constructor(baseURL: string = API_BASE_URL) {
+    this.instance = axios.create({
+      baseURL,
+      timeout: 30000, // 30 seconds
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Request interceptor - add auth tokens, logging, etc.
+    this.instance.interceptors.request.use(
+      (config) => {
+        // Add auth token if available
+        const token = typeof window !== 'undefined' 
+          ? localStorage.getItem('auth_token') 
+          : null;
+        
+        if (token && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        // Log requests in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, {
+            params: config.params,
+            data: config.data,
+          });
+        }
+
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    // Response interceptor - handle errors, logging, etc.
+    this.instance.interceptors.response.use(
+      (response) => {
+        // Log responses in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[API] ${response.config.method?.toUpperCase()} ${response.config.url} - ${response.status}`, {
+            data: response.data,
+          });
+        }
+
+        return response;
+      },
+      (error) => {
+        // Log errors
+        if (process.env.NODE_ENV === 'development') {
+          console.error('[API Error]', {
+            url: error.config?.url,
+            method: error.config?.method,
+            status: error.response?.status,
+            message: error.message,
+            data: error.response?.data,
+          });
+        }
+
+        // Handle specific error cases
+        if (error.response) {
+          // Server responded with error status
+          const status = error.response.status;
+          
+          if (status === 401) {
+            // Unauthorized - clear token and redirect to login
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('auth_token');
+              // You can add redirect logic here
+            }
+          }
+          
+          if (status === 404) {
+            error.message = 'Resource not found';
+          }
+          
+          if (status >= 500) {
+            error.message = 'Server error. Please try again later.';
+          }
+        } else if (error.request) {
+          // Request made but no response received
+          error.message = 'Network error. Please check your connection.';
+        }
+
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  /**
+   * Generic GET request
+   */
+  async get<T = any>(
+    url: string,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.get<T>(url, config);
+  }
+
+  /**
+   * Generic POST request
+   */
+  async post<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.post<T>(url, data, config);
+  }
+
+  /**
+   * Generic PUT request
+   */
+  async put<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.put<T>(url, data, config);
+  }
+
+  /**
+   * Generic PATCH request
+   */
+  async patch<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.patch<T>(url, data, config);
+  }
+
+  /**
+   * Generic DELETE request
+   */
+  async delete<T = any>(
+    url: string,
+    config?: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
+    return this.instance.delete<T>(url, config);
+  }
+
+  /**
+   * Generic request method for full control
+   */
+  async request<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    return this.instance.request<T>(config);
+  }
+
+  /**
+   * Get the axios instance for advanced usage
+   */
+  getAxiosInstance(): AxiosInstance {
+    return this.instance;
+  }
 }
 
-export async function fetchPost(slug: string): Promise<BlogPost> {
-  const res = await fetch(`${API_BASE_URL}/api/posts/${slug}`);
-  if (!res.ok) throw new Error(`Failed to fetch post: ${res.statusText}`);
-  
-  const data = await res.json();
-  return BlogPostSchema.parse(data);
-}
+// Export a singleton instance
+export const apiClient = new ApiClient();
 
-export async function createPost(post: CreatePostInput): Promise<BlogPost> {
-  CreatePostInputSchema.parse(post);
-  
-  const res = await fetch(`${API_BASE_URL}/api/posts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(post),
-  });
-  
-  if (!res.ok) throw new Error(`Failed to create post: ${res.statusText}`);
-  
-  const data = await res.json();
-  return BlogPostSchema.parse(data);
-}
+// Export the class for custom instances
+export { ApiClient };
 
-export async function updatePost(post: UpdatePostInput): Promise<BlogPost> {
-  UpdatePostInputSchema.parse(post);
-  
-  const res = await fetch(`${API_BASE_URL}/api/posts/${post.id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(post),
-  });
-  
-  if (!res.ok) throw new Error(`Failed to update post: ${res.statusText}`);
-  
-  const data = await res.json();
-  return BlogPostSchema.parse(data);
-}
-
-export async function deletePost(id: string): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/api/posts/${id}`, {
-    method: 'DELETE',
-  });
-  
-  if (!res.ok) throw new Error(`Failed to delete post: ${res.statusText}`);
-}
-
-// Portfolio Projects API
-export async function fetchProjects(params?: FetchProjectsParams): Promise<PortfolioProject[]> {
-  const searchParams = new URLSearchParams();
-  if (params?.status) searchParams.set('status', params.status);
-  if (params?.technology) searchParams.set('technology', params.technology);
-  if (params?.limit) searchParams.set('limit', params.limit.toString());
-  if (params?.offset) searchParams.set('offset', params.offset.toString());
-
-  const res = await fetch(`${API_BASE_URL}/api/projects?${searchParams}`);
-  if (!res.ok) throw new Error(`Failed to fetch projects: ${res.statusText}`);
-  
-  const data = await res.json();
-  return PortfolioProjectSchema.array().parse(data);
-}
-
-export async function fetchProject(slug: string): Promise<PortfolioProject> {
-  const res = await fetch(`${API_BASE_URL}/api/projects/${slug}`);
-  if (!res.ok) throw new Error(`Failed to fetch project: ${res.statusText}`);
-  
-  const data = await res.json();
-  return PortfolioProjectSchema.parse(data);
-}
-
-export async function createProject(project: CreateProjectInput): Promise<PortfolioProject> {
-  CreateProjectInputSchema.parse(project);
-  
-  const res = await fetch(`${API_BASE_URL}/api/projects`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(project),
-  });
-  
-  if (!res.ok) throw new Error(`Failed to create project: ${res.statusText}`);
-  
-  const data = await res.json();
-  return PortfolioProjectSchema.parse(data);
-}
-
-export async function updateProject(project: UpdateProjectInput): Promise<PortfolioProject> {
-  UpdateProjectInputSchema.parse(project);
-  
-  const res = await fetch(`${API_BASE_URL}/api/projects/${project.id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(project),
-  });
-  
-  if (!res.ok) throw new Error(`Failed to update project: ${res.statusText}`);
-  
-  const data = await res.json();
-  return PortfolioProjectSchema.parse(data);
-}
-
-export async function deleteProject(id: string): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
-    method: 'DELETE',
-  });
-  
-  if (!res.ok) throw new Error(`Failed to delete project: ${res.statusText}`);
-}
-
-// Image Upload API
-export async function uploadImage(file: File): Promise<ImageUploadResponse> {
-  const formData = new FormData();
-  formData.append('image', file);
-
-  const res = await fetch(`${API_BASE_URL}/api/images/upload`, {
-    method: 'POST',
-    body: formData,
-  });
-  
-  if (!res.ok) throw new Error(`Failed to upload image: ${res.statusText}`);
-  
-  const data = await res.json();
-  return ImageUploadResponseSchema.parse(data);
-}
-
-// Authentication API
-export async function login(email: string, password: string): Promise<AuthResponse> {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
-  
-  if (!res.ok) throw new Error(`Failed to login: ${res.statusText}`);
-  
-  const data = await res.json();
-  return AuthResponseSchema.parse(data);
-}
-
-export async function logout(): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/api/auth/logout`, {
-    method: 'POST',
-  });
-  
-  if (!res.ok) throw new Error(`Failed to logout: ${res.statusText}`);
-}
-
-export async function getCurrentUser(): Promise<AuthResponse['user']> {
-  const res = await fetch(`${API_BASE_URL}/api/auth/me`);
-  
-  if (!res.ok) throw new Error(`Failed to get current user: ${res.statusText}`);
-  
-  const data = await res.json();
-  return AuthResponseSchema.shape.user.parse(data);
-}

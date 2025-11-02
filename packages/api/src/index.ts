@@ -1,4 +1,12 @@
+// Types and schemas
 export * from './types';
 export * from './schemas';
-export * from './client';
-export * from './mocks/browser';
+
+// API Client
+export { apiClient, ApiClient } from './client';
+
+// React Query hooks
+export * from './hooks';
+
+// Note: MSW browser setup is exported separately via './mocks' export path
+// Import it explicitly: import { worker } from '@repo/api/mocks';

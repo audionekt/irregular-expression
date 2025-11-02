@@ -1,12 +1,202 @@
-import { BlogPost, PortfolioProject } from '../types';
+import {
+  BlogPostResponse,
+  TagResponse,
+  UserResponse,
+  MediaResponse,
+  PostStatus,
+  UserRole,
+  MediaType,
+} from '../types';
 
-export const mockBlogPosts: BlogPost[] = [
+// Mock Users
+export const mockUsers: UserResponse[] = [
   {
-    id: '1',
+    id: 1,
+    email: 'john.doe@example.com',
+    firstName: 'John',
+    lastName: 'Doe',
+    username: 'johndoe',
+    bio: 'Senior Full Stack Developer and Technical Writer',
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+    role: UserRole.ADMIN,
+    active: true,
+    createdAt: '2023-01-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 2,
+    email: 'jane.smith@example.com',
+    firstName: 'Jane',
+    lastName: 'Smith',
+    username: 'janesmith',
+    bio: 'UI/UX Designer and Frontend Developer',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+    role: UserRole.AUTHOR,
+    active: true,
+    createdAt: '2023-02-20T14:30:00Z',
+    updatedAt: '2024-01-10T14:30:00Z',
+  },
+  {
+    id: 3,
+    email: 'mike.johnson@example.com',
+    firstName: 'Mike',
+    lastName: 'Johnson',
+    username: 'mikejohnson',
+    bio: 'DevOps Engineer and Cloud Architect',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face',
+    role: UserRole.AUTHOR,
+    active: true,
+    createdAt: '2023-03-10T09:15:00Z',
+    updatedAt: '2024-01-05T09:15:00Z',
+  },
+];
+
+// Mock Tags
+export const mockTags: TagResponse[] = [
+  {
+    id: 1,
+    name: 'Next.js',
+    slug: 'nextjs',
+    postCount: 3,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 2,
+    name: 'TypeScript',
+    slug: 'typescript',
+    postCount: 5,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 3,
+    name: 'React',
+    slug: 'react',
+    postCount: 4,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 4,
+    name: 'Web Development',
+    slug: 'web-development',
+    postCount: 6,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 5,
+    name: 'CSS',
+    slug: 'css',
+    postCount: 2,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-10T14:30:00Z',
+  },
+  {
+    id: 6,
+    name: 'Architecture',
+    slug: 'architecture',
+    postCount: 2,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-05T09:15:00Z',
+  },
+  {
+    id: 7,
+    name: 'Performance',
+    slug: 'performance',
+    postCount: 1,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-05T09:15:00Z',
+  },
+  {
+    id: 8,
+    name: 'Tutorial',
+    slug: 'tutorial',
+    postCount: 3,
+    createdAt: '2023-01-01T00:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+];
+
+// Mock Media
+export const mockMedia: MediaResponse[] = [
+  {
+    id: 1,
+    fileName: 'nextjs-blog-cover.jpg',
+    originalFileName: 'blog-header-nextjs.jpg',
+    fileUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
+    contentType: 'image/jpeg',
+    fileSize: 245680,
+    mediaType: MediaType.IMAGE,
+    width: 1200,
+    height: 600,
+    altText: 'Modern web development setup with code editor',
+    caption: 'Building modern applications with Next.js',
+    uploadedBy: {
+      id: 1,
+      username: 'johndoe',
+      firstName: 'John',
+      lastName: 'Doe',
+      avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+    },
+    uploadedAt: '2024-01-15T09:00:00Z',
+    updatedAt: '2024-01-15T09:00:00Z',
+  },
+  {
+    id: 2,
+    fileName: 'css-styling-cover.jpg',
+    originalFileName: 'styling-comparison.jpg',
+    fileUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop',
+    contentType: 'image/jpeg',
+    fileSize: 198420,
+    mediaType: MediaType.IMAGE,
+    width: 1200,
+    height: 600,
+    altText: 'CSS styling and design tools',
+    caption: 'Modern CSS approaches comparison',
+    uploadedBy: {
+      id: 2,
+      username: 'janesmith',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      avatarUrl: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+    },
+    uploadedAt: '2024-01-10T13:00:00Z',
+    updatedAt: '2024-01-10T13:00:00Z',
+  },
+  {
+    id: 3,
+    fileName: 'monorepo-architecture.jpg',
+    originalFileName: 'architecture-diagram.jpg',
+    fileUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
+    contentType: 'image/jpeg',
+    fileSize: 312450,
+    mediaType: MediaType.IMAGE,
+    width: 1200,
+    height: 600,
+    altText: 'Software architecture diagram',
+    caption: 'Monorepo architecture visualization',
+    uploadedBy: {
+      id: 3,
+      username: 'mikejohnson',
+      firstName: 'Mike',
+      lastName: 'Johnson',
+      avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face',
+    },
+    uploadedAt: '2024-01-05T08:00:00Z',
+    updatedAt: '2024-01-05T08:00:00Z',
+  },
+];
+
+// Mock Blog Posts
+export const mockBlogPosts: BlogPostResponse[] = [
+  {
+    id: 1,
     slug: 'building-a-modern-blog-with-nextjs',
     title: 'Building a Modern Blog with Next.js',
-    description: 'Learn how to build a sophisticated blog using Next.js 15, TypeScript, and modern web technologies.',
-    content: `# Building a Modern Blog with Next.js
+    excerpt: 'Learn how to build a sophisticated blog using Next.js 15, TypeScript, and modern web technologies.',
+    mdxContent: `# Building a Modern Blog with Next.js
 
 This is a comprehensive guide to building a modern blog using Next.js 15, TypeScript, and cutting-edge web technologies.
 
@@ -43,21 +233,45 @@ Building a modern blog with Next.js provides excellent performance, developer ex
 ![Blog Architecture](https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop)
 
 > This blog post demonstrates the power of modern web development with Next.js and TypeScript.`,
-    status: 'published',
-    publishedAt: '2024-01-15T10:00:00Z',
-    coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
-    tags: ['Next.js', 'TypeScript', 'Web Development', 'Tutorial'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
+    featuredMedia: {
+      id: 1,
+      fileName: 'nextjs-blog-cover.jpg',
+      fileUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
+      contentType: 'image/jpeg',
+      mediaType: MediaType.IMAGE,
+    },
     author: {
-      name: 'John Doe',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'
-    }
+      id: 1,
+      username: 'johndoe',
+      firstName: 'John',
+      lastName: 'Doe',
+      avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+    },
+    tags: [
+      { id: 1, name: 'Next.js', slug: 'nextjs' },
+      { id: 2, name: 'TypeScript', slug: 'typescript' },
+      { id: 4, name: 'Web Development', slug: 'web-development' },
+      { id: 8, name: 'Tutorial', slug: 'tutorial' },
+    ],
+    status: PostStatus.PUBLISHED,
+    metaTitle: 'Building a Modern Blog with Next.js | Complete Guide',
+    metaDescription: 'Learn how to build a sophisticated blog using Next.js 15, TypeScript, and modern web technologies in this comprehensive guide.',
+    metaKeywords: 'Next.js, TypeScript, Blog, Web Development, Tutorial',
+    publishedAt: '2024-01-15T10:00:00Z',
+    viewCount: 1250,
+    readingTimeMinutes: 8,
+    allowComments: true,
+    featured: true,
+    createdAt: '2024-01-14T15:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
   },
   {
-    id: '2',
+    id: 2,
     slug: 'vanilla-extract-vs-tailwind-css',
     title: 'Vanilla Extract vs Tailwind CSS: A Developer\'s Perspective',
-    description: 'Comparing Vanilla Extract and Tailwind CSS for styling modern React applications.',
-    content: `# Vanilla Extract vs Tailwind CSS
+    excerpt: 'Comparing Vanilla Extract and Tailwind CSS for styling modern React applications.',
+    mdxContent: `# Vanilla Extract vs Tailwind CSS
 
 When choosing a styling solution for React applications, developers often debate between Vanilla Extract and Tailwind CSS. Let's explore both approaches.
 
@@ -110,21 +324,44 @@ Both approaches have their merits:
 - **Choose Tailwind** if you prioritize rapid development and utility-first approach
 
 For our monorepo, we chose Vanilla Extract for its type safety and zero-runtime benefits.`,
-    status: 'published',
-    publishedAt: '2024-01-10T14:30:00Z',
-    coverImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop',
-    tags: ['CSS', 'Styling', 'React', 'Comparison'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop',
+    featuredMedia: {
+      id: 2,
+      fileName: 'css-styling-cover.jpg',
+      fileUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop',
+      contentType: 'image/jpeg',
+      mediaType: MediaType.IMAGE,
+    },
     author: {
-      name: 'Jane Smith',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face'
-    }
+      id: 2,
+      username: 'janesmith',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      avatarUrl: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+    },
+    tags: [
+      { id: 5, name: 'CSS', slug: 'css' },
+      { id: 3, name: 'React', slug: 'react' },
+      { id: 2, name: 'TypeScript', slug: 'typescript' },
+    ],
+    status: PostStatus.PUBLISHED,
+    metaTitle: 'Vanilla Extract vs Tailwind CSS | Developer Comparison',
+    metaDescription: 'Comparing Vanilla Extract and Tailwind CSS for styling modern React applications.',
+    metaKeywords: 'CSS, Tailwind, Vanilla Extract, React, Styling',
+    publishedAt: '2024-01-10T14:30:00Z',
+    viewCount: 875,
+    readingTimeMinutes: 6,
+    allowComments: true,
+    featured: false,
+    createdAt: '2024-01-09T10:00:00Z',
+    updatedAt: '2024-01-10T14:30:00Z',
   },
   {
-    id: '3',
+    id: 3,
     slug: 'monorepo-architecture-best-practices',
     title: 'Monorepo Architecture: Best Practices for Modern Development',
-    description: 'Explore best practices for organizing and managing monorepos in modern web development.',
-    content: `# Monorepo Architecture: Best Practices
+    excerpt: 'Explore best practices for organizing and managing monorepos in modern web development.',
+    mdxContent: `# Monorepo Architecture: Best Practices
 
 Monorepos have become increasingly popular in modern web development. Here's how to structure them effectively.
 
@@ -170,123 +407,36 @@ monorepo/
 4. **Collaboration**: Easier team coordination
 
 Monorepos are powerful when used correctly, but require careful planning and tooling to be effective.`,
-    status: 'published',
-    publishedAt: '2024-01-05T09:15:00Z',
-    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
-    tags: ['Monorepo', 'Architecture', 'Development', 'Best Practices'],
+    featuredImageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
+    featuredMedia: {
+      id: 3,
+      fileName: 'monorepo-architecture.jpg',
+      fileUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
+      contentType: 'image/jpeg',
+      mediaType: MediaType.IMAGE,
+    },
     author: {
-      name: 'Mike Johnson',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face'
-    }
-  }
-];
-
-export const mockPortfolioProjects: PortfolioProject[] = [
-  {
-    id: '1',
-    slug: 'e-commerce-platform',
-    title: 'E-Commerce Platform',
-    description: 'A full-stack e-commerce platform built with Next.js, TypeScript, and PostgreSQL.',
-    content: `# E-Commerce Platform
-
-A comprehensive e-commerce solution built with modern web technologies.
-
-## Technologies Used
-
-- **Frontend**: Next.js 15, TypeScript, Vanilla Extract
-- **Backend**: Node.js, Express, PostgreSQL
-- **Authentication**: NextAuth.js
-- **Payments**: Stripe
-- **Deployment**: Vercel, Railway
-
-## Key Features
-
-- Product catalog with search and filtering
-- Shopping cart and checkout process
-- User authentication and profiles
-- Admin dashboard for inventory management
-- Payment processing with Stripe
-- Order tracking and management
-
-## Architecture
-
-The platform follows a microservices architecture with separate services for:
-
-- User management
-- Product catalog
-- Order processing
-- Payment handling
-- Notification system
-
-## Performance Optimizations
-
-- Server-side rendering for SEO
-- Image optimization with Next.js Image
-- Database query optimization
-- CDN integration for static assets
-- Caching strategies
-
-## Results
-
-- **99.9%** uptime
-- **< 2s** page load times
-- **95%** Lighthouse score
-- **$50k+** in processed transactions`,
-    technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe', 'Vercel'],
-    coverImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=600&fit=crop',
-    liveUrl: 'https://ecommerce-demo.vercel.app',
-    githubUrl: 'https://github.com/username/ecommerce-platform',
-    status: 'published',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-15T10:00:00Z'
+      id: 3,
+      username: 'mikejohnson',
+      firstName: 'Mike',
+      lastName: 'Johnson',
+      avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face',
+    },
+    tags: [
+      { id: 6, name: 'Architecture', slug: 'architecture' },
+      { id: 4, name: 'Web Development', slug: 'web-development' },
+      { id: 7, name: 'Performance', slug: 'performance' },
+    ],
+    status: PostStatus.PUBLISHED,
+    metaTitle: 'Monorepo Architecture Best Practices | Modern Development',
+    metaDescription: 'Explore best practices for organizing and managing monorepos in modern web development.',
+    metaKeywords: 'Monorepo, Architecture, Development, Best Practices',
+    publishedAt: '2024-01-05T09:15:00Z',
+    viewCount: 1520,
+    readingTimeMinutes: 7,
+    allowComments: true,
+    featured: true,
+    createdAt: '2024-01-04T12:00:00Z',
+    updatedAt: '2024-01-05T09:15:00Z',
   },
-  {
-    id: '2',
-    slug: 'task-management-app',
-    title: 'Task Management App',
-    description: 'A collaborative task management application with real-time updates and team collaboration features.',
-    content: `# Task Management App
-
-A modern task management application designed for teams and individuals.
-
-## Features
-
-- **Real-time Collaboration**: Live updates across all connected clients
-- **Project Organization**: Hierarchical project and task structure
-- **Team Management**: User roles and permissions
-- **Time Tracking**: Built-in time tracking for tasks
-- **Notifications**: Real-time notifications for updates
-- **Mobile Support**: Responsive design for all devices
-
-## Tech Stack
-
-- **Frontend**: React, TypeScript, Chakra UI
-- **Backend**: Node.js, Express, Socket.io
-- **Database**: MongoDB with Mongoose
-- **Real-time**: Socket.io for live updates
-- **Authentication**: JWT with refresh tokens
-- **Deployment**: Docker, AWS ECS
-
-## Architecture Highlights
-
-- **Event-driven architecture** for real-time updates
-- **Microservices** for scalability
-- **GraphQL API** for efficient data fetching
-- **Redis** for caching and session management
-- **Elasticsearch** for advanced search capabilities
-
-## Performance Metrics
-
-- **< 100ms** real-time update latency
-- **99.5%** uptime
-- **10k+** concurrent users supported
-- **< 1s** initial load time`,
-    technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'AWS'],
-    coverImage: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=600&fit=crop',
-    liveUrl: 'https://taskmanager-demo.vercel.app',
-    githubUrl: 'https://github.com/username/task-manager',
-    status: 'published',
-    createdAt: '2023-12-15T00:00:00Z',
-    updatedAt: '2024-01-10T15:30:00Z'
-  }
 ];
