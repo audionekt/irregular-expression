@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TextArea } from './TextArea';
+import { TextArea } from '../textarea';
 
 describe('TextArea', () => {
   it('renders textarea element', () => {

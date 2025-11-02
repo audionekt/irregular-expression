@@ -1,3 +1,3 @@
-export { Chip } from './Chip';
-export type { ChipProps } from './Chip';
+export { Chip } from './chip';
+export type { ChipProps } from './chip';
 

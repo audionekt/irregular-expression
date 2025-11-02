@@ -1,6 +1,5 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Avatar } from './Avatar';
+import { Avatar } from '../avatar';
 
 describe('Avatar', () => {
   it('renders image when src is provided', () => {

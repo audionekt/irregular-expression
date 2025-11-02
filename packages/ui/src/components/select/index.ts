@@ -1,3 +1,3 @@
-export { Select } from './Select';
-export type { SelectProps } from './Select';
+export { Select } from './select';
+export type { SelectProps } from './select';
 
