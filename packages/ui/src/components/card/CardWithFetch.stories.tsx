@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse, delay } from 'msw';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Card } from './Card';
 import { Typography } from '../typography';
