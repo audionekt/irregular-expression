@@ -1,10 +1,12 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './input.css';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string | undefined;
   error?: string | undefined;
   helper?: string | undefined;
+  state?: 'default' | 'error' | 'success';
   leftIcon?: React.ReactNode | undefined;
   rightIcon?: React.ReactNode | undefined;
   fullWidth?: boolean | undefined;
@@ -16,6 +18,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       label,
       error,
       helper,
+      state,
       leftIcon,
       rightIcon,
       fullWidth,
@@ -27,41 +30,30 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const inputId = id || `input-${React.useId()}`;
+    const inputState = error ? 'error' : state || 'default';
 
     return (
-      <div className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
+      <div className={cn(styles.wrapper, fullWidth && styles.fullWidth)}>
         {label && (
-          <label
-            htmlFor={inputId}
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor={inputId} className={styles.label}>
             {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
+            {props.required && <span className={styles.required}>*</span>}
           </label>
         )}
 
-        <div className="relative">
+        <div className={styles.inputWrapper}>
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              {leftIcon}
-            </div>
+            <div className={cn(styles.icon, styles.leftIcon)}>{leftIcon}</div>
           )}
 
           <input
             ref={ref}
             id={inputId}
             className={cn(
-              'flex h-10 w-full rounded-lg border-2 bg-white px-3 py-2 text-sm',
-              'transition-all duration-200',
-              'placeholder:text-gray-400',
-              'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-              'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
-              'dark:bg-gray-900 dark:border-gray-700 dark:text-white',
-              error
-                ? 'border-red-300 focus:ring-red-500'
-                : 'border-gray-300 hover:border-gray-400',
-              leftIcon ? 'pl-10' : '',
-              rightIcon ? 'pr-10' : '',
+              styles.input,
+              styles.inputStates[inputState],
+              leftIcon ? styles.withLeftIcon : '',
+              rightIcon ? styles.withRightIcon : '',
               className
             )}
             disabled={disabled}
@@ -73,19 +65,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
 
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-              {rightIcon}
-            </div>
+            <div className={cn(styles.icon, styles.rightIcon)}>{rightIcon}</div>
           )}
         </div>
 
         {error && (
-          <p
-            id={`${inputId}-error`}
-            className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
-          >
+          <p id={`${inputId}-error`} className={cn(styles.message, styles.errorMessage)}>
             <svg
-              className="h-4 w-4 flex-shrink-0"
+              className={styles.errorIcon}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -100,7 +87,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {helper && !error && (
-          <p id={`${inputId}-helper`} className="text-sm text-gray-500 dark:text-gray-400">
+          <p id={`${inputId}-helper`} className={cn(styles.message, styles.helperMessage)}>
             {helper}
           </p>
         )}
@@ -110,4 +97,3 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = 'Input';
-

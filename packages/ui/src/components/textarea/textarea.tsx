@@ -1,10 +1,12 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './textarea.css';
 
 export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string | undefined;
   error?: string | undefined;
   helper?: string | undefined;
+  state?: 'default' | 'error' | 'success';
   fullWidth?: boolean | undefined;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both' | undefined;
 }
@@ -15,6 +17,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       label,
       error,
       helper,
+      state,
       fullWidth,
       resize = 'vertical',
       className,
@@ -26,23 +29,14 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ref
   ) => {
     const textAreaId = id || `textarea-${React.useId()}`;
-
-    const resizeClass = {
-      none: 'resize-none',
-      vertical: 'resize-y',
-      horizontal: 'resize-x',
-      both: 'resize',
-    }[resize];
+    const textAreaState = error ? 'error' : state || 'default';
 
     return (
-      <div className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
+      <div className={cn(styles.wrapper, fullWidth && styles.fullWidth)}>
         {label && (
-          <label
-            htmlFor={textAreaId}
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor={textAreaId} className={styles.label}>
             {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
+            {props.required && <span className={styles.required}>*</span>}
           </label>
         )}
 
@@ -51,16 +45,9 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={textAreaId}
           rows={rows}
           className={cn(
-            'flex min-h-[80px] w-full rounded-lg border-2 bg-white px-3 py-2 text-sm',
-            'transition-all duration-200',
-            'placeholder:text-gray-400',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-            'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
-            'dark:bg-gray-900 dark:border-gray-700 dark:text-white',
-            error
-              ? 'border-red-300 focus:ring-red-500'
-              : 'border-gray-300 hover:border-gray-400',
-            resizeClass,
+            styles.textarea,
+            styles.inputStates[textAreaState],
+            styles.resize[resize],
             className
           )}
           disabled={disabled}
@@ -72,12 +59,9 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         />
 
         {error && (
-          <p
-            id={`${textAreaId}-error`}
-            className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
-          >
+          <p id={`${textAreaId}-error`} className={cn(styles.message, styles.errorMessage)}>
             <svg
-              className="h-4 w-4 flex-shrink-0"
+              className={styles.errorIcon}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -92,7 +76,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         )}
 
         {helper && !error && (
-          <p id={`${textAreaId}-helper`} className="text-sm text-gray-500 dark:text-gray-400">
+          <p id={`${textAreaId}-helper`} className={cn(styles.message, styles.helperMessage)}>
             {helper}
           </p>
         )}
@@ -102,4 +86,3 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
 );
 
 TextArea.displayName = 'TextArea';
-

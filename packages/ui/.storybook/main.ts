@@ -1,5 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 import path from 'path';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
@@ -23,6 +24,9 @@ const config: StorybookConfig = {
       config.plugins = config.plugins.filter(
         (plugin: any) => plugin && plugin.name !== 'vite:dts'
       );
+      
+      // Add vanilla-extract plugin
+      config.plugins.push(vanillaExtractPlugin());
     }
 
     // Configure alias for workspace packages
@@ -34,15 +38,6 @@ const config: StorybookConfig = {
       '@repo/api': path.resolve(__dirname, '../../api/src'),
       // Mock Next.js font imports for Storybook
       'next/font/google': path.resolve(__dirname, './mocks/next-font-google.js'),
-    };
-
-    // Add PostCSS support for Tailwind
-    config.css = config.css || {};
-    config.css.postcss = {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
     };
 
     return config;

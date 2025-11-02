@@ -1,22 +1,19 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './card.css';
 
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   variant?: 'default' | 'elevated' | 'outlined';
-  hover?: boolean;
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  interactive?: boolean;
   as?: React.ElementType;
 }
 
-const variantClasses = {
-  default: 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800',
-  elevated: 'bg-white dark:bg-gray-900 shadow-lg',
-  outlined: 'border-2 border-gray-200 dark:border-gray-800',
-};
-
 export function Card({ 
   variant = 'default', 
-  hover = true,
+  padding = 'md',
+  interactive = false,
   className,
   children,
   as = 'article',
@@ -27,9 +24,10 @@ export function Card({
   return (
     <Component
       className={cn(
-        'p-6 rounded-lg transition-colors',
-        variantClasses[variant],
-        hover && 'hover:border-gray-300 dark:hover:border-gray-700',
+        styles.card,
+        styles.variants[variant],
+        styles.padding[padding],
+        interactive && styles.interactive,
         className
       )}
       {...props}
@@ -38,4 +36,3 @@ export function Card({
     </Component>
   );
 }
-

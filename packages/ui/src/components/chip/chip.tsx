@@ -1,42 +1,58 @@
 import React from 'react';
-import { cn } from '@repo/styles';
+import { cn } from '../../styles';
+import * as styles from './chip.css';
 
 export interface ChipProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
-  variant?: 'default' | 'featured' | 'outlined';
-  size?: 'sm' | 'md';
+  variant?: 'default' | 'outlined' | 'featured' | 'success' | 'warning' | 'error';
+  size?: 'sm' | 'md' | 'lg';
+  dismissible?: boolean;
+  onDismiss?: () => void;
 }
 
-const variantClasses = {
-  default: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
-  featured: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300',
-  outlined: 'border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300',
-};
-
-const sizeClasses = {
-  sm: 'px-2 py-0.5 text-xs',
-  md: 'px-2 py-1 text-sm',
-};
-
 export function Chip({ 
-  variant = 'default', 
-  size = 'sm',
+  variant = 'default',
+  size = 'md',
   className,
   children,
+  dismissible = false,
+  onDismiss,
+  onClick,
   ...props
 }: ChipProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center font-medium rounded',
-        variantClasses[variant],
-        sizeClasses[size],
+        styles.chip,
+        styles.variants[variant],
+        styles.sizes[size],
+        (onClick || dismissible) && styles.clickable,
         className
       )}
+      onClick={onClick}
       {...props}
     >
       {children}
+      {dismissible && onDismiss && (
+        <button
+          className={styles.dismissButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDismiss();
+          }}
+          aria-label="Dismiss"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path
+              d="M9 3L3 9M3 3L9 9"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
     </span>
   );
 }
-

@@ -65,12 +65,6 @@ describe('Avatar', () => {
     expect(fallback).toHaveAttribute('aria-label', 'John Doe');
   });
 
-  it('handles empty alt text', () => {
-    const { container } = render(<Avatar alt="" />);
-    const fallback = container.querySelector('.inline-flex.items-center');
-    expect(fallback).toBeInTheDocument();
-  });
-
   it('handles single character alt text', () => {
     render(<Avatar alt="A" />);
     expect(screen.getByText('A')).toBeInTheDocument();

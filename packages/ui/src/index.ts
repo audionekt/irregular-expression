@@ -27,3 +27,6 @@ export type { FormProps, FormSectionProps, FormGridProps, FormActionsProps } fro
 
 export { Layout } from './utils/layout';
 export type { AppLayoutProps } from './utils/layout';
+
+// Export styles and theme
+export * from './styles';

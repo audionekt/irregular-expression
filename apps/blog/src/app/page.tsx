@@ -2,6 +2,7 @@
 
 import { Button, Typography, Card, Chip, Avatar } from "aurigami";
 import { useBlogPosts, PostStatus } from "@repo/api";
+import * as styles from './page.css';
 
 export default function Home() {
   const { data, isLoading, error } = useBlogPosts({
@@ -11,10 +12,10 @@ export default function Home() {
   });
 
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col gap-8 py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <div>
-          <Typography variant="h1" className="mb-2">
+    <div className={styles.outerContainer}>
+      <main className={styles.mainContent}>
+        <div className={styles.header}>
+          <Typography variant="h1">
             Blog Posts
           </Typography>
           <Typography variant="p">
@@ -23,7 +24,7 @@ export default function Home() {
         </div>
 
         {isLoading && (
-          <div className="flex items-center justify-center py-12">
+          <div className={styles.loadingContainer}>
             <Typography variant="caption">
               Loading posts...
             </Typography>
@@ -31,8 +32,8 @@ export default function Home() {
         )}
 
         {error && (
-          <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <Typography variant="p" className="text-red-600 dark:text-red-400">
+          <div className={styles.errorBox}>
+            <Typography variant="p">
               Error loading posts: {error.message}
             </Typography>
           </div>
@@ -40,31 +41,31 @@ export default function Home() {
 
         {data && (
           <>
-            <div className="flex flex-col gap-6 w-full">
+            <div className={styles.postsContainer}>
               {data.content.map((post) => (
-                <Card key={post.id}>
-                  <div className="flex items-start justify-between mb-3">
+                <Card key={post.id} padding="md">
+                  <div className={styles.postHeader}>
                     <Typography 
                       variant="h2" 
-                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+                      className={styles.postTitle}
                     >
                       {post.title}
                     </Typography>
                     {post.featured && (
-                      <Chip variant="featured" size="md" className="ml-2">
+                      <Chip variant="featured" size="md" className={styles.featuredChip}>
                         Featured
                       </Chip>
                     )}
                   </div>
 
                   {post.excerpt && (
-                    <Typography variant="p" className="mb-4">
+                    <Typography variant="p" className={styles.postExcerpt}>
                       {post.excerpt}
                     </Typography>
                   )}
 
-                  <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-2">
+                  <div className={styles.postMeta}>
+                    <div className={styles.metaItem}>
                       <Avatar
                         src={post.author.avatarUrl}
                         alt={`${post.author.firstName} ${post.author.lastName}`}
@@ -88,7 +89,7 @@ export default function Home() {
                     {post.tags.length > 0 && (
                       <>
                         <Typography variant="caption">•</Typography>
-                        <div className="flex gap-2">
+                        <div className={styles.tagsContainer}>
                           {post.tags.map((tag) => (
                             <Chip key={tag.id}>
                               {tag.name}
@@ -103,7 +104,7 @@ export default function Home() {
             </div>
 
             {/* Pagination Info */}
-            <div className="flex items-center justify-between w-full pt-4 border-t border-gray-200 dark:border-gray-800">
+            <div className={styles.pagination}>
               <Typography variant="caption">
                 Showing {data.content.length} of {data.totalElements} posts
                 {data.totalPages > 1 && ` • Page ${data.number + 1} of ${data.totalPages}`}
