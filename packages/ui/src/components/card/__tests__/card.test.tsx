@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Card } from './Card';
+import { Card } from '../card';
 
 describe('Card', () => {
   it('renders as article by default', () => {

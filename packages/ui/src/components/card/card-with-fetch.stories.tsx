@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse, delay } from 'msw';
 import { useEffect, useState } from 'react';
-import { Card } from './Card';
+import { Card } from './card';
 import { Typography } from '../typography';
 import { Chip } from '../chip';
 import { Avatar } from '../avatar';

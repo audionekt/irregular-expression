@@ -1,3 +1,3 @@
-export { Form, FormSection, FormGrid, FormActions } from './Form';
-export type { FormProps, FormSectionProps, FormGridProps, FormActionsProps } from './Form';
+export { Form, FormSection, FormGrid, FormActions } from './form';
+export type { FormProps, FormSectionProps, FormGridProps, FormActionsProps } from './form';
 

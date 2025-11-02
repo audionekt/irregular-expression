@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Typography } from './Typography';
+import { Typography } from '../typography';
 
 describe('Typography', () => {
   it('renders h1 variant as H1 element', () => {
