@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui";
+import { Button } from "aurigami";
 
 export default function Home() {
   return (

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-    
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -16,7 +16,7 @@ const geistSans = Geist({
     children: ReactNode;
   }
   
-  export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+  export const Layout: React.FC<AppLayoutProps> = ({ children }) => {
     return (
       <html lang="en">
         <body

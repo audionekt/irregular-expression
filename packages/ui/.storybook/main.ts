@@ -16,6 +16,13 @@ const config: StorybookConfig = {
     // Set unique cache directory to avoid conflicts
     config.cacheDir = path.join(__dirname, '../node_modules/.vite-storybook');
 
+    // Remove dts plugin from Storybook (not needed for preview builds)
+    if (config.plugins) {
+      config.plugins = config.plugins.filter(
+        (plugin: any) => plugin && plugin.name !== 'vite:dts'
+      );
+    }
+
     // Configure alias for workspace packages
     config.resolve = config.resolve || {};
     config.resolve.alias = {
