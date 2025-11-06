@@ -11,6 +11,14 @@ export const avatarBase = style({
   overflow: 'hidden',
 });
 
+export const avatarWrapper = style({
+  border: '2px solid',
+  borderColor: vars.color.gray[300],
+  borderRadius: vars.radius.circle,
+  boxSizing: 'border-box',
+  overflow: 'hidden',
+});
+
 export const avatarImage = style({
   width: '100%',
   height: '100%',
@@ -49,7 +57,7 @@ export const sizes = styleVariants({
 // Shape variants
 export const shapes = styleVariants({
   circle: {
-    borderRadius: vars.radius.full,
+    borderRadius: vars.radius.circle,
   },
   square: {
     borderRadius: vars.radius.none,
