@@ -42,6 +42,7 @@ export function Avatar({
   }
 
   return (
+    <div className={cn(styles.avatarWrapper, styles.shapes[shape])}>
     <img
       src={src}
       alt={alt}
@@ -55,5 +56,6 @@ export function Avatar({
       )}
       {...props}
     />
+    </div>
   );
 }

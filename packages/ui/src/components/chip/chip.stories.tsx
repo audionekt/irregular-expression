@@ -84,7 +84,7 @@ export const TagsExample: Story = {
       <Chip>React</Chip>
       <Chip>TypeScript</Chip>
       <Chip>Next.js</Chip>
-      <Chip>Tailwind CSS</Chip>
+      <Chip>Vanilla Extract CSS</Chip>
       <Chip>Storybook</Chip>
       <Chip variant="featured">MSW</Chip>
     </div>

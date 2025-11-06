@@ -78,7 +78,7 @@ export const dismissButton = style({
   border: 'none',
   background: 'none',
   cursor: 'pointer',
-  borderRadius: vars.radius.full,
+  borderRadius: vars.radius.circle,
   opacity: 0.6,
   transition: `opacity ${vars.transition.duration.fast} ${vars.transition.easing.easeInOut}`,
   

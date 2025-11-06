@@ -86,6 +86,7 @@ export const vars = createThemeContract({
     '2xl': null,
     '3xl': null,
     full: null,
+    circle: null,
   },
   transition: {
     duration: {
