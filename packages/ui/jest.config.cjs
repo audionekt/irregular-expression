@@ -51,6 +51,7 @@ module.exports = {
     '!src/**/*.d.ts',              // Exclude type definitions
     '!src/utils/layout.tsx',      // Exclude Layout (Next.js specific)
     '!src/layout.ts',             // Exclude layout barrel export
+    '!src/tokens/**',             // Exclude design tokens
   ],
   
   // Coverage thresholds - enforcing good test coverage
