@@ -1,9 +1,16 @@
 // Mock for vanilla-extract .css.ts files in Jest
-// This creates a recursive proxy that returns 'mock-class' for any property access
+// Returns plain strings to ensure compatibility with libraries expecting string classNames
 
 const MOCK_CLASS_NAME = 'mock-class';
 
-// Create a handler that works recursively  
+// Create a string-like object with additional properties for nested access
+class MockClassName extends String {
+  constructor() {
+    super(MOCK_CLASS_NAME);
+  }
+}
+
+// Create a handler that returns MockClassName instances
 const createProxyHandler = () => ({
   get: (_target, prop) => {
     // Don't mock special React/internal properties
@@ -18,19 +25,15 @@ const createProxyHandler = () => ({
       return undefined;
     }
 
-    // For toString/valueOf, return the mock class name
+    // For string methods, return the mock class name as a real string
     if (prop === 'toString' || prop === 'valueOf') {
       return () => MOCK_CLASS_NAME;
     }
 
-    // Return a new proxy for any other property access
+    // For any property access, return a MockClassName that acts as a string
     // This handles chaining like styles.variants.primary or styles.sizes[size]
-    return new Proxy({}, createProxyHandler());
+    return new MockClassName();
   },
-  
-  // Support using the proxy as a string in template literals
-  toString: () => MOCK_CLASS_NAME,
-  valueOf: () => MOCK_CLASS_NAME,
 });
 
 // Create the base mock object

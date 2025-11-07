@@ -21,8 +21,8 @@ globalStyle('body', {
   fontSize: globalTokens.font.size.base,
   fontWeight: globalTokens.font.weight.normal,
   lineHeight: globalTokens.font.lineHeight.normal,
-  color: vars.color.gray[900],
-  backgroundColor: vars.color.gray[50],
+  color: vars.color.semantic.foreground.primary,
+  backgroundColor: vars.color.semantic.background.subtle,
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
 });
@@ -77,7 +77,7 @@ globalStyle('img, svg', {
 
 // Focus styles
 globalStyle(':focus-visible', {
-  outline: `2px solid ${vars.color.brand[500]}`,
+  outline: `2px solid ${vars.color.semantic.brand.accent}`,
   outlineOffset: '2px',
 });
 

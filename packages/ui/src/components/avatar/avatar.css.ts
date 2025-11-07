@@ -13,8 +13,8 @@ export const avatarBase = style({
 
 export const avatarWrapper = style({
   border: '2px solid',
-  borderColor: vars.color.gray[300],
-  borderRadius: vars.radius.circle,
+  borderColor: vars.color.semantic.border.default,
+  borderRadius: vars.radius.full,
   boxSizing: 'border-box',
   overflow: 'hidden',
 });
@@ -29,8 +29,8 @@ export const avatarFallback = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: vars.color.gray[200],
-  color: vars.color.gray[600],
+  backgroundColor: vars.color.semantic.background.muted,
+  color: vars.color.semantic.foreground.secondary,
   fontWeight: globalTokens.font.weight.medium,
   userSelect: 'none',
 });
@@ -57,7 +57,7 @@ export const sizes = styleVariants({
 // Shape variants
 export const shapes = styleVariants({
   circle: {
-    borderRadius: vars.radius.circle,
+    borderRadius: vars.radius.full,
   },
   square: {
     borderRadius: vars.radius.none,

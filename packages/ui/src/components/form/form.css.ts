@@ -23,12 +23,12 @@ export const formSectionHeader = style({
 export const formSectionTitle = style({
   fontSize: globalTokens.font.size.lg,
   fontWeight: globalTokens.font.weight.semibold,
-  color: vars.color.gray[900],
+  color: vars.color.semantic.foreground.primary,
 });
 
 export const formSectionDescription = style({
   fontSize: globalTokens.font.size.sm,
-  color: vars.color.gray[500],
+  color: vars.color.semantic.foreground.tertiary,
 });
 
 export const formSectionContent = style({
@@ -81,7 +81,7 @@ export const formActions = style({
   alignItems: 'center',
   gap: vars.space[3],
   paddingTop: vars.space[4],
-  borderTop: `1px solid ${vars.color.gray[200]}`,
+  borderTop: `1px solid ${vars.color.semantic.border.default}`,
 });
 
 export const formActionsAlign = styleVariants({

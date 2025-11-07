@@ -1,15 +1,14 @@
 import { createTheme, createGlobalTheme } from '@vanilla-extract/css';
-import { colors, spacing, shadows, radii, duration, easing } from '@repo/tokens';
+import { colors, gradients, spacing, shadows, radii, duration, easing } from '../tokens';
 import { vars } from './contract.css';
 
 // Create the light theme (default)
 export const lightTheme = createTheme(vars, {
   color: {
-    brand: colors.brand,
-    gray: colors.gray,
-    accent: colors.accent,
+    primitive: colors.primitive,
     semantic: colors.semantic,
   },
+  gradient: gradients,
   space: spacing,
   shadow: shadows,
   radius: radii,
@@ -22,24 +21,63 @@ export const lightTheme = createTheme(vars, {
 // Create the dark theme
 export const darkTheme = createTheme(vars, {
   color: {
-    brand: colors.brand,
-    gray: {
-      // Invert gray scale for dark mode
-      50: colors.gray[950],
-      100: colors.gray[900],
-      200: colors.gray[800],
-      300: colors.gray[700],
-      400: colors.gray[600],
-      500: colors.gray[500],
-      600: colors.gray[400],
-      700: colors.gray[300],
-      800: colors.gray[200],
-      900: colors.gray[100],
-      950: colors.gray[50],
+    primitive: {
+      // Invert charcoal scale for dark mode
+      charcoal: {
+        50: colors.primitive.charcoal[950],
+        100: colors.primitive.charcoal[900],
+        200: colors.primitive.charcoal[800],
+        300: colors.primitive.charcoal[700],
+        400: colors.primitive.charcoal[600],
+        500: colors.primitive.charcoal[500],
+        600: colors.primitive.charcoal[400],
+        700: colors.primitive.charcoal[300],
+        800: colors.primitive.charcoal[200],
+        900: colors.primitive.charcoal[100],
+        950: colors.primitive.charcoal[50],
+      },
+      // Keep other primitive colors the same
+      gold: colors.primitive.gold,
+      sage: colors.primitive.sage,
+      terracotta: colors.primitive.terracotta,
     },
-    accent: colors.accent,
-    semantic: colors.semantic,
+    semantic: {
+      brand: {
+        primary: colors.primitive.charcoal[50],
+        primaryHover: colors.primitive.charcoal[100],
+        primaryActive: colors.primitive.charcoal[200],
+        accent: colors.semantic.brand.accent,
+        accentHover: colors.semantic.brand.accentHover,
+        accentActive: colors.semantic.brand.accentActive,
+      },
+      background: {
+        base: colors.primitive.charcoal[950],
+        subtle: colors.primitive.charcoal[900],
+        muted: colors.primitive.charcoal[800],
+        elevated: colors.primitive.charcoal[900],
+        overlay: 'rgba(250, 250, 249, 0.1)',
+      },
+      foreground: {
+        primary: colors.primitive.charcoal[50],
+        secondary: colors.primitive.charcoal[300],
+        tertiary: colors.primitive.charcoal[400],
+        muted: colors.primitive.charcoal[600],
+        onBrand: colors.primitive.charcoal[950],
+        accent: colors.semantic.foreground.accent,
+      },
+      border: {
+        default: colors.primitive.charcoal[800],
+        strong: colors.primitive.charcoal[700],
+        subtle: colors.primitive.charcoal[900],
+        accent: colors.primitive.gold[700],
+      },
+      success: colors.semantic.success,
+      error: colors.semantic.error,
+      warning: colors.semantic.warning,
+      info: colors.semantic.info,
+    },
   },
+  gradient: gradients,
   space: spacing,
   shadow: shadows,
   radius: radii,
@@ -53,9 +91,8 @@ export const darkTheme = createTheme(vars, {
 export const globalTokens = createGlobalTheme(':root', {
   font: {
     family: {
-      sans: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      serif: 'Merriweather, Georgia, Cambria, "Times New Roman", Times, serif',
-      mono: '"JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+      sans: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      mono: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
     },
     size: {
       xs: '0.75rem',
@@ -68,20 +105,12 @@ export const globalTokens = createGlobalTheme(':root', {
       '4xl': '2.25rem',
       '5xl': '3rem',
       '6xl': '3.75rem',
-      '7xl': '4.5rem',
-      '8xl': '6rem',
-      '9xl': '8rem',
     },
     weight: {
-      thin: '100',
-      extralight: '200',
-      light: '300',
       normal: '400',
       medium: '500',
       semibold: '600',
       bold: '700',
-      extrabold: '800',
-      black: '900',
     },
     lineHeight: {
       none: '1',
@@ -97,7 +126,6 @@ export const globalTokens = createGlobalTheme(':root', {
       normal: '0em',
       wide: '0.025em',
       wider: '0.05em',
-      widest: '0.1em',
     },
   },
   zIndex: {
@@ -120,4 +148,3 @@ export const globalTokens = createGlobalTheme(':root', {
     '2xl': '1536px',
   },
 });
-

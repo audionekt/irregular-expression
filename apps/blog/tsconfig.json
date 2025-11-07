@@ -9,11 +9,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "aurigami": ["../../packages/ui/src/index.ts"],
-      "aurigami/*": ["../../packages/ui/src/*"],
-      "@repo/styles": ["../../packages/styles/src/index.ts"],
-      "@repo/styles/*": ["../../packages/styles/src/*"],
-      "@repo/tokens": ["../../packages/tokens/src/index.ts"],
-      "@repo/tokens/*": ["../../packages/tokens/src/*"]
+      "aurigami/*": ["../../packages/ui/src/*"]
     }
   },
   "include": [

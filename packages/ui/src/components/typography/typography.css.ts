@@ -48,7 +48,7 @@ export const variants = styleVariants({
     fontSize: globalTokens.font.size.sm,
     fontWeight: globalTokens.font.weight.normal,
     lineHeight: globalTokens.font.lineHeight.normal,
-    color: vars.color.gray[600],
+    color: vars.color.semantic.foreground.secondary,
   },
   small: {
     fontSize: globalTokens.font.size.xs,
@@ -58,15 +58,10 @@ export const variants = styleVariants({
 });
 
 export const weights = styleVariants({
-  thin: { fontWeight: globalTokens.font.weight.thin },
-  extralight: { fontWeight: globalTokens.font.weight.extralight },
-  light: { fontWeight: globalTokens.font.weight.light },
   normal: { fontWeight: globalTokens.font.weight.normal },
   medium: { fontWeight: globalTokens.font.weight.medium },
   semibold: { fontWeight: globalTokens.font.weight.semibold },
   bold: { fontWeight: globalTokens.font.weight.bold },
-  extrabold: { fontWeight: globalTokens.font.weight.extrabold },
-  black: { fontWeight: globalTokens.font.weight.black },
 });
 
 export const aligns = styleVariants({

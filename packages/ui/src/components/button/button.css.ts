@@ -9,14 +9,14 @@ export const button = style({
   gap: vars.space[2],
   borderRadius: vars.radius.lg,
   fontWeight: globalTokens.font.weight.semibold,
-  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.easeInOut}`,
+  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
   cursor: 'pointer',
   border: 'none',
   textDecoration: 'none',
   userSelect: 'none',
   
   ':focus-visible': {
-    outline: `2px solid ${vars.color.brand[500]}`,
+    outline: `2px solid ${vars.color.semantic.brand.accent}`,
     outlineOffset: '2px',
   },
   
@@ -30,72 +30,72 @@ export const button = style({
 // Variant styles
 export const variants = styleVariants({
   primary: {
-    backgroundColor: vars.color.brand[600],
-    color: 'white',
+    backgroundColor: vars.color.semantic.brand.primary,
+    color: vars.color.semantic.foreground.onBrand,
     boxShadow: vars.shadow.sm,
     
     ':hover': {
-      backgroundColor: vars.color.brand[700],
+      backgroundColor: vars.color.semantic.brand.primaryHover,
       boxShadow: vars.shadow.md,
     },
     
     ':active': {
-      backgroundColor: vars.color.brand[800],
+      backgroundColor: vars.color.semantic.brand.primaryActive,
     },
   },
   secondary: {
-    backgroundColor: 'white',
-    color: vars.color.gray[900],
-    border: `2px solid ${vars.color.gray[300]}`,
+    backgroundColor: vars.color.semantic.background.base,
+    color: vars.color.semantic.foreground.primary,
+    border: `2px solid ${vars.color.semantic.border.default}`,
     
     ':hover': {
-      backgroundColor: vars.color.gray[50],
-      borderColor: vars.color.gray[400],
+      backgroundColor: vars.color.semantic.background.subtle,
+      borderColor: vars.color.semantic.border.strong,
     },
     
     ':active': {
-      backgroundColor: vars.color.gray[100],
+      backgroundColor: vars.color.semantic.background.muted,
     },
   },
   ghost: {
     backgroundColor: 'transparent',
-    color: vars.color.gray[700],
+    color: vars.color.semantic.foreground.secondary,
     
     ':hover': {
-      backgroundColor: vars.color.gray[100],
-      color: vars.color.gray[900],
+      backgroundColor: vars.color.semantic.background.subtle,
+      color: vars.color.semantic.foreground.primary,
     },
     
     ':active': {
-      backgroundColor: vars.color.gray[200],
+      backgroundColor: vars.color.semantic.background.muted,
     },
   },
   danger: {
-    backgroundColor: vars.color.semantic.error,
-    color: 'white',
+    backgroundColor: vars.color.semantic.error.base,
+    color: vars.color.semantic.foreground.onBrand,
     boxShadow: vars.shadow.sm,
     
     ':hover': {
-      backgroundColor: '#dc2626',
+      backgroundColor: vars.color.semantic.error.hover,
       boxShadow: vars.shadow.md,
     },
     
     ':active': {
-      backgroundColor: '#b91c1c',
+      backgroundColor: vars.color.semantic.error.text,
     },
   },
   success: {
-    backgroundColor: vars.color.semantic.success,
-    color: 'white',
+    backgroundColor: vars.color.semantic.success.base,
+    color: vars.color.semantic.foreground.onBrand,
     boxShadow: vars.shadow.sm,
     
     ':hover': {
-      backgroundColor: '#059669',
+      backgroundColor: vars.color.semantic.success.hover,
       boxShadow: vars.shadow.md,
     },
     
     ':active': {
-      backgroundColor: '#047857',
+      backgroundColor: vars.color.semantic.success.text,
     },
   },
 });
@@ -103,7 +103,7 @@ export const variants = styleVariants({
 // Size variants
 export const sizes = styleVariants({
   sm: {
-    height: vars.space[9],
+    height: vars.space[8],
     paddingLeft: vars.space[3],
     paddingRight: vars.space[3],
     fontSize: globalTokens.font.size.sm,
@@ -121,7 +121,7 @@ export const sizes = styleVariants({
     fontSize: globalTokens.font.size.base,
   },
   xl: {
-    height: '3.5rem',
+    height: vars.space[16],
     paddingLeft: vars.space[8],
     paddingRight: vars.space[8],
     fontSize: globalTokens.font.size.lg,

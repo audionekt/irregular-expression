@@ -3,6 +3,7 @@
 import { Typography, Button, Card, Chip, Avatar } from "aurigami";
 import { useBlogPosts, PostStatus } from "@repo/api";
 import { useRouter } from 'next/navigation';
+import { Plus, AlertCircle, Edit } from 'lucide-react';
 import * as styles from './page.css';
 
 export default function PostsPage() {
@@ -28,11 +29,7 @@ export default function PostsPage() {
             </div>
             <Button
               size="lg"
-              leftIcon={
-                <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-              }
+              leftIcon={<Plus className={styles.svgIcon} />}
               onClick={() => router.push('/posts/new')}
             >
               New Post
@@ -81,9 +78,7 @@ export default function PostsPage() {
         {error && (
           <Card padding="md">
             <div className={styles.statContent}>
-              <svg className={styles.errorIcon} fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
+              <AlertCircle className={styles.errorIcon} />
               <div>
                 <Typography variant="h3">
                   Error loading posts
@@ -109,11 +104,7 @@ export default function PostsPage() {
               <Button
                 size="lg"
                 onClick={() => router.push('/posts/new')}
-                leftIcon={
-                  <svg className={styles.svgIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                }
+                leftIcon={<Plus className={styles.svgIcon} />}
               >
                 Create Your First Post
               </Button>
@@ -216,9 +207,7 @@ export default function PostsPage() {
                         router.push(`/posts/${post.id}`);
                       }}
                     >
-                      <svg className={styles.svgIconSm} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
+                      <Edit className={styles.svgIconSm} />
                     </Button>
                   </div>
                 </div>
