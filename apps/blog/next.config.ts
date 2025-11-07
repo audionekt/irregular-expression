@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   outputFileTracingRoot: path.resolve(__dirname, '../..'),
-  transpilePackages: ['aurigami', '@repo/styles', '@repo/tokens'],
+  transpilePackages: ['aurigami'],
   experimental: {
     externalDir: true,
   },
@@ -16,8 +16,6 @@ const nextConfig: NextConfig = {
     // Add alias for workspace packages to resolve from source
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@repo/styles': path.resolve(__dirname, '../../packages/styles/src'),
-      '@repo/tokens': path.resolve(__dirname, '../../packages/tokens/src'),
       'aurigami/layout': path.resolve(__dirname, '../../packages/ui/src/layout.ts'),
       'aurigami': path.resolve(__dirname, '../../packages/ui/src'),
     };

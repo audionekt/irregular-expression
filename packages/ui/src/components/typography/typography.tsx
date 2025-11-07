@@ -38,7 +38,7 @@ export function Typography({
       className={cn(
         styles.typography,
         styles.variants[variant],
-        weight && styles.weights[weight],
+        weight && styles.weights[weight as keyof typeof styles.weights],
         align && styles.aligns[align],
         className
       )}

@@ -3,21 +3,21 @@ import { vars } from '../../styles/contract.css';
 
 export const card = style({
   borderRadius: vars.radius.lg,
-  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.easeInOut}`,
+  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
 });
 
 export const variants = styleVariants({
   default: {
-    backgroundColor: 'white',
-    border: `1px solid ${vars.color.gray[200]}`,
+    backgroundColor: vars.color.semantic.background.base,
+    border: `1px solid ${vars.color.semantic.border.default}`,
   },
   elevated: {
-    backgroundColor: 'white',
+    backgroundColor: vars.color.semantic.background.elevated,
     boxShadow: vars.shadow.lg,
   },
   outlined: {
     backgroundColor: 'transparent',
-    border: `2px solid ${vars.color.gray[200]}`,
+    border: `2px solid ${vars.color.semantic.border.default}`,
   },
 });
 
@@ -40,7 +40,7 @@ export const interactive = style({
   cursor: 'pointer',
   
   ':hover': {
-    borderColor: vars.color.gray[300],
+    borderColor: vars.color.semantic.border.strong,
   },
 });
 

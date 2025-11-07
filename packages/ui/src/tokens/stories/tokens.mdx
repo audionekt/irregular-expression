@@ -1,0 +1,610 @@
+import { Meta } from '@storybook/blocks';
+import { colors, gradients, spacing, shadows, radii, duration, easing, fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, breakpoints, zIndex } from '../index';
+
+<Meta title="Design System/Tokens" />
+
+<style>{`
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .token-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .color-swatch {
+    width: 100%;
+    height: 80px;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  .gradient-swatch {
+    width: 100%;
+    height: 100px;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  .shadow-box {
+    width: 100%;
+    height: 80px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .radius-box {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(135deg, #d4b568 0%, #b8954a 100%);
+    margin-bottom: 0.5rem;
+  }
+
+  .spacing-box {
+    height: 40px;
+    background: #d4b568;
+    border-radius: 4px;
+  }
+
+  .token-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+  }
+
+  .token-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+
+  .type-sample {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .token-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .token-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .token-table code {
+    font-family: 'JetBrains Mono', monospace;
+    background: #f3f4f6;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    font-size: 0.8125rem;
+  }
+
+  .section-intro {
+    margin-bottom: 1.5rem;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+</style>
+
+# Aurigami Design Tokens
+
+A comprehensive catalog of all design tokens in the Aurigami design system. These tokens form the foundation of our UI components with a sophisticated color palette featuring warm neutrals and refined gold accents.
+
+---
+
+## Colors
+
+The Aurigami color system is built on a two-tier architecture: **Primitive colors** provide the raw palette, while **Semantic colors** map these primitives to specific use cases.
+
+### Primitive Colors
+
+Foundational color scales that form the basis of the design system.
+
+#### Charcoal
+
+<div className="section-intro">
+Warm neutral gray scale - the primary neutral palette for text, backgrounds, and borders.
+</div>
+
+<div className="token-grid">
+  {Object.entries(colors.primitive.charcoal).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">charcoal.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Gold
+
+<div className="section-intro">
+Rich, sophisticated gold scale - used for accents, highlights, and premium features.
+</div>
+
+<div className="token-grid">
+  {Object.entries(colors.primitive.gold).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">gold.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Sage
+
+<div className="section-intro">
+Subtle green scale - used for success states and natural elements.
+</div>
+
+<div className="token-grid">
+  {Object.entries(colors.primitive.sage).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">sage.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Terracotta
+
+<div className="section-intro">
+Warm red-orange scale - used for error states and warm accents.
+</div>
+
+<div className="token-grid">
+  {Object.entries(colors.primitive.terracotta).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">terracotta.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+### Semantic Colors
+
+Purpose-driven color mappings for consistent UI implementation.
+
+#### Brand
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.brand).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">brand.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Background
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.background).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">background.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Foreground
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.foreground).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">foreground.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Border
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.border).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">border.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Success
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.success).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">success.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Error
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.error).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">error.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Warning
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.warning).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">warning.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+#### Info
+
+<div className="token-grid">
+  {Object.entries(colors.semantic.info).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="color-swatch" style={{ backgroundColor: value }} />
+      <div className="token-label">info.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Gradients
+
+Sophisticated gradient definitions for backgrounds, overlays, and visual effects.
+
+### Background Gradients
+
+<div className="token-grid">
+  {Object.entries(gradients.background).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="gradient-swatch" style={{ background: value }} />
+      <div className="token-label">background.{key}</div>
+    </div>
+  ))}
+</div>
+
+### Brand Gradients
+
+<div className="token-grid">
+  {Object.entries(gradients.brand).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="gradient-swatch" style={{ background: value }} />
+      <div className="token-label">brand.{key}</div>
+    </div>
+  ))}
+</div>
+
+### Overlay Gradients
+
+<div className="token-grid">
+  {Object.entries(gradients.overlay).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="gradient-swatch" style={{ background: value }} />
+      <div className="token-label">overlay.{key}</div>
+    </div>
+  ))}
+</div>
+
+### Text Gradients
+
+<div className="token-grid">
+  {Object.entries(gradients.text).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div 
+        className="gradient-swatch" 
+        style={{ 
+          background: value,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        Aurigami
+      </div>
+      <div className="token-label">text.{key}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Spacing
+
+<div className="token-grid">
+  {Object.entries(spacing).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="spacing-box" style={{ width: value }} />
+      <div className="token-label">space[{key}]</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Typography
+
+### Font Families
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Sample</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(fontFamily).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>fontFamily.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td style={{ fontFamily: value }}>The quick brown fox</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+### Font Sizes
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Sample</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(fontSize).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>fontSize.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td style={{ fontSize: value }}>Aurigami</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+### Font Weights
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Sample</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(fontWeight).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>fontWeight.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td style={{ fontWeight: value }}>Aurigami Design System</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+---
+
+## Shadows
+
+<div className="token-grid">
+  {Object.entries(shadows).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="shadow-box" style={{ boxShadow: value }}>
+        {key}
+      </div>
+      <div className="token-label">shadow.{key}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Border Radius
+
+<div className="token-grid">
+  {Object.entries(radii).map(([key, value]) => (
+    <div key={key} className="token-card">
+      <div className="radius-box" style={{ borderRadius: value }} />
+      <div className="token-label">radius.{key}</div>
+      <div className="token-value">{value}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Animation
+
+### Duration
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(duration).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>duration.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td>{key === 'fast' ? 'Quick interactions' : key === 'base' ? 'Standard transitions' : key === 'slow' ? 'Complex animations' : 'Modal animations'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+### Easing
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(easing).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>easing.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td>{key === 'linear' ? 'Constant speed' : key === 'in' ? 'Accelerating' : key === 'out' ? 'Decelerating' : 'Smooth both ways'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+---
+
+## Breakpoints
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Device</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(breakpoints).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>breakpoints.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td>{key === 'xs' ? 'Mobile portrait' : key === 'sm' ? 'Mobile landscape' : key === 'md' ? 'Tablet' : key === 'lg' ? 'Laptop' : key === 'xl' ? 'Desktop' : 'Large desktop'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+---
+
+## Z-Index Scale
+
+<div className="table-container">
+  <table className="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Object.entries(zIndex).map(([key, value]) => (
+        <tr key={key}>
+          <td><code>zIndex.{key}</code></td>
+          <td><code>{value}</code></td>
+          <td>{key === 'base' ? 'Base layer' : key === 'dropdown' ? 'Dropdown menus' : key === 'sticky' ? 'Sticky elements' : key === 'fixed' ? 'Fixed position' : key === 'overlay' ? 'Overlay backgrounds' : key === 'modal' ? 'Modal dialogs' : key === 'popover' ? 'Popovers' : key === 'tooltip' ? 'Tooltips' : 'Toast notifications'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+---
+
+## Usage
+
+Import tokens in your components:
+
+```typescript
+import { colors, gradients, spacing, shadows } from '@repo/ui/tokens';
+
+// Use in vanilla-extract
+import { style } from '@vanilla-extract/css';
+
+export const button = style({
+  backgroundColor: colors.semantic.brand.primary,
+  padding: spacing[4],
+  boxShadow: shadows.md,
+  background: gradients.brand.accent,
+});
+```
+
+For themed values, use the theme contract:
+
+```typescript
+import { vars } from '@repo/ui/styles/contract.css';
+
+export const card = style({
+  backgroundColor: vars.color.semantic.background.base,
+  borderColor: vars.color.semantic.border.default,
+});
+```

@@ -9,7 +9,7 @@ export const chip = style({
   borderRadius: vars.radius.full,
   fontWeight: globalTokens.font.weight.medium,
   whiteSpace: 'nowrap',
-  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.easeInOut}`,
+  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
   border: '1px solid transparent',
 });
 
@@ -29,43 +29,43 @@ export const sizes = styleVariants({
   },
   md: {
     height: vars.space[6],
-    paddingLeft: vars.space[2.5],
-    paddingRight: vars.space[2.5],
+    paddingLeft: vars.space[3],
+    paddingRight: vars.space[3],
     fontSize: globalTokens.font.size.sm,
   },
   lg: {
     height: vars.space[8],
-    paddingLeft: vars.space[3],
-    paddingRight: vars.space[3],
+    paddingLeft: vars.space[4],
+    paddingRight: vars.space[4],
     fontSize: globalTokens.font.size.base,
   },
 });
 
 export const variants = styleVariants({
   default: {
-    backgroundColor: vars.color.gray[100],
-    color: vars.color.gray[800],
+    backgroundColor: vars.color.semantic.background.muted,
+    color: vars.color.semantic.foreground.primary,
   },
   outlined: {
     backgroundColor: 'transparent',
-    borderColor: vars.color.gray[300],
-    color: vars.color.gray[700],
+    borderColor: vars.color.semantic.border.default,
+    color: vars.color.semantic.foreground.secondary,
   },
   featured: {
-    backgroundColor: vars.color.brand[100],
-    color: vars.color.brand[700],
+    backgroundColor: vars.color.primitive.gold[100],
+    color: vars.color.primitive.gold[800],
   },
   success: {
-    backgroundColor: '#d1fae5',
-    color: '#065f46',
+    backgroundColor: vars.color.semantic.success.subtle,
+    color: vars.color.semantic.success.text,
   },
   warning: {
-    backgroundColor: '#fed7aa',
-    color: '#92400e',
+    backgroundColor: vars.color.semantic.warning.subtle,
+    color: vars.color.semantic.warning.text,
   },
   error: {
-    backgroundColor: '#fee2e2',
-    color: '#991b1b',
+    backgroundColor: vars.color.semantic.error.subtle,
+    color: vars.color.semantic.error.text,
   },
 });
 
@@ -78,9 +78,9 @@ export const dismissButton = style({
   border: 'none',
   background: 'none',
   cursor: 'pointer',
-  borderRadius: vars.radius.circle,
+  borderRadius: vars.radius.full,
   opacity: 0.6,
-  transition: `opacity ${vars.transition.duration.fast} ${vars.transition.easing.easeInOut}`,
+  transition: `opacity ${vars.transition.duration.fast} ${vars.transition.easing.inOut}`,
   
   ':hover': {
     opacity: 1,

@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "@repo/api": "workspace:*",
-    "@repo/styles": "workspace:*",
-    "@repo/tokens": "workspace:*",
     "@tanstack/react-query": "^5.62.10",
     "@tanstack/react-query-devtools": "^5.62.10",
     "aurigami": "workspace:*",

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Layout } from "aurigami";
 import { Providers } from "./providers";
-import "@repo/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "CMS Dashboard",

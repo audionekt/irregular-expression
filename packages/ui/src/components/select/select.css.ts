@@ -26,32 +26,32 @@ export const select = style({
   width: '100%',
   appearance: 'none',
   borderRadius: vars.radius.lg,
-  border: `2px solid ${vars.color.gray[300]}`,
-  backgroundColor: 'white',
+  border: `2px solid ${vars.color.semantic.border.default}`,
+  backgroundColor: vars.color.semantic.background.base,
   paddingLeft: vars.space[3],
   paddingRight: vars.space[10],
   paddingTop: vars.space[2],
   paddingBottom: vars.space[2],
   fontSize: globalTokens.font.size.sm,
-  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.easeInOut}`,
+  transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
   cursor: 'pointer',
 
   ':focus': {
     outline: 'none',
-    boxShadow: `0 0 0 2px ${vars.color.brand[500]}`,
+    boxShadow: `0 0 0 2px ${vars.color.semantic.brand.accent}`,
     borderColor: 'transparent',
   },
 
   selectors: {
     '&:hover:not(:disabled)': {
-      borderColor: vars.color.gray[400],
+      borderColor: vars.color.semantic.border.strong,
     },
   },
 
   ':disabled': {
     cursor: 'not-allowed',
     opacity: 0.5,
-    backgroundColor: vars.color.gray[50],
+    backgroundColor: vars.color.semantic.background.muted,
   },
 });
 
@@ -60,7 +60,7 @@ export const dropdownIcon = style({
   right: vars.space[3],
   top: '50%',
   transform: 'translateY(-50%)',
-  color: vars.color.gray[400],
+  color: vars.color.semantic.foreground.muted,
   pointerEvents: 'none',
   height: '1.25rem',
   width: '1.25rem',

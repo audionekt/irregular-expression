@@ -18,9 +18,6 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^aurigami$': '<rootDir>/../../packages/ui/src/index.ts',
-    '^@repo/styles$': '<rootDir>/../../packages/styles/src/index.ts',
-    '^@repo/styles/(.*)$': '<rootDir>/../../packages/styles/src/$1',
-    '^@repo/tokens$': '<rootDir>/../../packages/tokens/src/index.ts',
     // Handle vanilla-extract CSS imports
     '\\.(css)\\.ts$': '<rootDir>/../../packages/ui/src/__mocks__/styleMock.cjs',
     '\\.(css)$': '<rootDir>/../../packages/ui/src/__mocks__/styleMock.cjs',

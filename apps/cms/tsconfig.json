@@ -11,11 +11,7 @@
       "aurigami": ["../../packages/ui/src/index.ts"],
       "aurigami/*": ["../../packages/ui/src/*"],
       "@repo/api": ["../../packages/api/src/index.ts"],
-      "@repo/api/*": ["../../packages/api/src/*"],
-      "@repo/styles": ["../../packages/styles/src/index.ts"],
-      "@repo/styles/*": ["../../packages/styles/src/*"],
-      "@repo/tokens": ["../../packages/tokens/src/index.ts"],
-      "@repo/tokens/*": ["../../packages/tokens/src/*"]
+      "@repo/api/*": ["../../packages/api/src/*"]
     }
   },
   "include": [
