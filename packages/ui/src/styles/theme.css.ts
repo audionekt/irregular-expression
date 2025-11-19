@@ -91,7 +91,7 @@ export const darkTheme = createTheme(vars, {
 export const globalTokens = createGlobalTheme(':root', {
   font: {
     family: {
-      sans: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      sans: "'Merge One', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       mono: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
     },
     size: {

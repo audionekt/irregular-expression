@@ -9,6 +9,7 @@ export const button = style({
   gap: vars.space[2],
   borderRadius: vars.radius.lg,
   fontWeight: globalTokens.font.weight.semibold,
+  fontFamily: globalTokens.font.family.sans,
   transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
   cursor: 'pointer',
   border: 'none',

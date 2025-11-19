@@ -1,0 +1,10 @@
+/* Merge One font via @font-face */
+/* Loading from CDNfonts.com */
+@font-face {
+  font-family: 'Merge One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/15936/MergeOne-Regular.woff') format('woff');
+}
+

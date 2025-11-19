@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Layout } from "aurigami";
 import { Providers } from "./providers";
+import "aurigami/styles/fonts.css";
 
 export const metadata: Metadata = {
   title: "CMS Dashboard",

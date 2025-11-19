@@ -17,7 +17,8 @@
         "default": "./dist/index.cjs"
       }
     },
-    "./layout": "./src/layout.ts"
+    "./layout": "./src/layout.ts",
+    "./fonts.css": "./src/styles/fonts.css"
   },
   "files": [
     "dist",
