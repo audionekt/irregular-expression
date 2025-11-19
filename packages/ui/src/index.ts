@@ -19,8 +19,8 @@ export type { InputProps } from './components/input';
 export { TextArea } from './components/textarea';
 export type { TextAreaProps } from './components/textarea';
 
-export { Select } from './components/select';
-export type { SelectProps } from './components/select';
+export { Dropdown } from './components/dropdown';
+export type { DropdownProps } from './components/dropdown';
 
 export { Form, FormSection, FormGrid, FormActions } from './components/form';
 export type { FormProps, FormSectionProps, FormGridProps, FormActionsProps } from './components/form';
