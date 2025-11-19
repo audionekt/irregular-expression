@@ -17,6 +17,8 @@ export const avatarWrapper = style({
   borderRadius: vars.radius.full,
   boxSizing: 'border-box',
   overflow: 'hidden',
+  width: 'fit-content',
+  height: 'fit-content',
 });
 
 export const avatarImage = style({

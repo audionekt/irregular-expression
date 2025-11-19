@@ -5,6 +5,7 @@ import { globalTokens } from '../../styles/theme.css';
 export const typography = style({
   margin: 0,
   padding: 0,
+  fontFamily: globalTokens.font.family.sans,
 });
 
 export const variants = styleVariants({
