@@ -22,6 +22,9 @@ export type { TextAreaProps } from './components/textarea';
 export { Dropdown } from './components/dropdown';
 export type { DropdownProps } from './components/dropdown';
 
+export { Checkbox } from './components/checkbox';
+export type { CheckboxProps } from './components/checkbox';
+
 export { Form, FormSection, FormGrid, FormActions } from './components/form';
 export type { FormProps, FormSectionProps, FormGridProps, FormActionsProps } from './components/form';
 

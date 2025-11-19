@@ -237,6 +237,9 @@ importers:
       axios:
         specifier: ^1.6.0
         version: 1.13.1
+      lucide-react:
+        specifier: ^0.552.0
+        version: 0.552.0(react@19.2.0)
       msw:
         specifier: ^2.0.0
         version: 2.11.6(@types/node@20.19.23)(typescript@5.9.2)

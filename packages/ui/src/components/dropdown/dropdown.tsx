@@ -18,6 +18,7 @@ import {
 } from '@floating-ui/react';
 import { cn } from '../../styles';
 import { lightTheme } from '../../styles/theme.css';
+import { Checkbox } from '../checkbox';
 import * as styles from './dropdown.css';
 
 export interface DropdownProps<T> {
@@ -231,13 +232,12 @@ export function Dropdown<T>({
         tabIndex={isActive ? 0 : -1}
       >
         {multiple && (
-          <input
-            type="checkbox"
+          <Checkbox
             checked={selected}
             readOnly
-            className={styles.checkbox}
             tabIndex={-1}
             aria-hidden="true"
+            style={{ pointerEvents: 'none' }}
           />
         )}
         <span>{label}</span>
