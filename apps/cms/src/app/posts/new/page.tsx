@@ -8,7 +8,7 @@ import {
   Button,
   Input,
   TextArea,
-  Select,
+  Dropdown,
   Form,
   FormSection,
   FormGrid,
@@ -197,15 +197,18 @@ export default function NewPostPage() {
             <div className={styles.sidebar}>
               <Card padding="md">
                 <FormSection title="Publish Settings">
-                  <Select
+                  <Dropdown
                     label="Status"
                     value={formData.status}
-                    onChange={(e) => handleInputChange('status', e.target.value)}
-                    options={[
-                      { value: PostStatus.DRAFT, label: '📄 Draft' },
-                      { value: PostStatus.PUBLISHED, label: '✅ Published' },
-                      { value: PostStatus.ARCHIVED, label: '📦 Archived' },
-                    ]}
+                    onChange={(value) => handleInputChange('status', value)}
+                    options={[PostStatus.DRAFT, PostStatus.PUBLISHED, PostStatus.ARCHIVED]}
+                    getItemLabel={(status) => {
+                      if (!status) return '';
+                      if (status === PostStatus.DRAFT) return '📄 Draft';
+                      if (status === PostStatus.PUBLISHED) return '✅ Published';
+                      if (status === PostStatus.ARCHIVED) return '📦 Archived';
+                      return status;
+                    }}
                     fullWidth
                   />
 
@@ -262,22 +265,17 @@ export default function NewPostPage() {
 
               <Card padding="md">
                 <FormSection title="Tags" description="Categorize your post">
-                  <Select
+                  <Dropdown
                     label="Select Tags"
-                    value=""
-                    onChange={(e) => {
-                      const tagId = parseInt(e.target.value);
-                      if (tagId && !formData.tagIds?.includes(tagId)) {
-                        handleInputChange('tagIds', [...(formData.tagIds || []), tagId]);
+                    value={undefined}
+                    onChange={(tag) => {
+                      if (tag && !Array.isArray(tag) && 'id' in tag && !formData.tagIds?.includes(tag.id)) {
+                        handleInputChange('tagIds', [...(formData.tagIds || []), tag.id]);
                       }
                     }}
-                    options={[
-                      { value: '', label: 'Choose a tag...' },
-                      ...(tagsData?.content || []).map((tag) => ({
-                        value: tag.id.toString(),
-                        label: tag.name,
-                      })),
-                    ]}
+                    options={tagsData?.content || []}
+                    getItemLabel={(tag) => (tag && 'name' in tag) ? tag.name : ''}
+                    placeholder="Choose a tag..."
                     fullWidth
                   />
 

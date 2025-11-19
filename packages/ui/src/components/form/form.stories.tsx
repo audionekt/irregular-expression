@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Form, FormSection, FormGrid, FormActions } from './form';
 import { Input } from '../input';
 import { TextArea } from '../textarea';
-import { Select } from '../select';
+import { Dropdown } from '../dropdown';
 import { Button } from '../button';
 
 const meta = {
@@ -74,13 +74,10 @@ export const WithGrid: Story = {
         <Input label="Email" type="email" placeholder="john@example.com" required fullWidth />
         <FormGrid columns={2}>
           <Input label="Phone" type="tel" placeholder="+1 (555) 000-0000" />
-          <Select
+          <Dropdown
             label="Country"
-            options={[
-              { value: 'us', label: 'United States' },
-              { value: 'ca', label: 'Canada' },
-              { value: 'uk', label: 'United Kingdom' },
-            ]}
+            options={['United States', 'Canada', 'United Kingdom']}
+            placeholder="Select country"
           />
         </FormGrid>
         <TextArea label="Message" placeholder="How can we help you?" rows={5} fullWidth />
@@ -108,13 +105,10 @@ export const MultiColumnLayout: Story = {
         </FormGrid>
         <FormGrid columns={4}>
           <Input label="Age" type="number" placeholder="25" />
-          <Select
+          <Dropdown
             label="Gender"
-            options={[
-              { value: 'm', label: 'Male' },
-              { value: 'f', label: 'Female' },
-              { value: 'o', label: 'Other' },
-            ]}
+            options={['Male', 'Female', 'Other']}
+            placeholder="Select gender"
           />
           <Input label="City" placeholder="New York" />
           <Input label="Zip" placeholder="10001" />
