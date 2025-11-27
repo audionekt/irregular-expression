@@ -9,6 +9,7 @@ import {
   Input,
   TextArea,
   Dropdown,
+  Checkbox,
   Form,
   FormSection,
   FormGrid,
@@ -33,11 +34,16 @@ export default function NewPostPage() {
     status: PostStatus.DRAFT,
     featured: false,
     tagIds: [],
+    authorId: 1, // TODO: Replace with actual logged-in user ID
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string>('');
 
   const handleSubmit = async () => {
+    // Clear previous submit error
+    setSubmitError('');
+    
     // Validation
     const newErrors: Record<string, string> = {};
     if (!formData.title) newErrors.title = 'Title is required';
@@ -50,10 +56,32 @@ export default function NewPostPage() {
     }
 
     try {
-      await createPost.mutateAsync(formData as CreateBlogPostRequest);
+      // Clean the payload - remove empty strings and undefined values
+      const cleanedData = Object.entries(formData).reduce((acc, [key, value]) => {
+        // Skip empty strings, undefined, and empty arrays
+        if (value === '' || value === undefined || (Array.isArray(value) && value.length === 0)) {
+          return acc;
+        }
+        return { ...acc, [key]: value };
+      }, {} as CreateBlogPostRequest);
+
+      console.log('Sending payload:', cleanedData);
+      
+      await createPost.mutateAsync(cleanedData);
       router.push('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to create post:', error);
+      console.error('Error response:', error?.response?.data);
+      console.error('Error status:', error?.response?.status);
+      
+      // Try to get the most detailed error message
+      const errorMessage = error?.response?.data?.message 
+        || error?.response?.data?.error
+        || error?.response?.data?.details
+        || (typeof error?.response?.data === 'string' ? error?.response?.data : '')
+        || error?.message 
+        || 'Failed to create post. Please try again.';
+      setSubmitError(errorMessage);
     }
   };
 
@@ -104,6 +132,27 @@ export default function NewPostPage() {
       {/* Form */}
       <div className={styles.formContainer}>
         <Form onSubmit={handleSubmit}>
+          {/* Error Message */}
+          {submitError && (
+            <Card padding="md" style={{ 
+              backgroundColor: '#fef2f2', 
+              border: '1px solid #fca5a5',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span style={{ fontSize: '1.25rem' }}>⚠️</span>
+                <div>
+                  <Typography variant="p" style={{ fontWeight: 600, color: '#991b1b', marginBottom: '0.25rem' }}>
+                    Error Creating Post
+                  </Typography>
+                  <Typography variant="p" style={{ color: '#7f1d1d', fontSize: '0.875rem' }}>
+                    {submitError}
+                  </Typography>
+                </div>
+              </div>
+            </Card>
+          )}
+          
           <div className={styles.formGrid}>
             {/* Main Content - 2/3 width */}
             <div className={styles.mainColumn}>
@@ -213,52 +262,12 @@ export default function NewPostPage() {
                   />
 
                   <div className={styles.featuredToggle}>
-                    <div className={styles.toggleText}>
-                      <Typography variant="p" style={{ fontWeight: 500, marginBottom: '0.25rem' }}>
-                        Featured Post
-                      </Typography>
-                      <Typography variant="caption">
-                        Show on homepage
-                      </Typography>
-                    </div>
-                    <label className={styles.toggleSwitch}>
-                      <input
-                        type="checkbox"
-                        checked={formData.featured}
-                        onChange={(e) => handleInputChange('featured', e.target.checked)}
-                        style={{
-                          position: 'absolute',
-                          width: '1px',
-                          height: '1px',
-                          padding: 0,
-                          margin: '-1px',
-                          overflow: 'hidden',
-                          clip: 'rect(0, 0, 0, 0)',
-                          whiteSpace: 'nowrap',
-                          borderWidth: 0,
-                        }}
-                      />
-                      <div style={{
-                        width: '2.75rem',
-                        height: '1.5rem',
-                        backgroundColor: formData.featured ? '#2563eb' : '#d1d5db',
-                        borderRadius: '9999px',
-                        position: 'relative',
-                        transition: 'background-color 0.2s',
-                      }}>
-                        <div style={{
-                          position: 'absolute',
-                          top: '2px',
-                          left: formData.featured ? 'calc(100% - 1.25rem - 2px)' : '2px',
-                          width: '1.25rem',
-                          height: '1.25rem',
-                          backgroundColor: 'white',
-                          border: formData.featured ? '1px solid white' : '1px solid #d1d5db',
-                          borderRadius: '9999px',
-                          transition: 'left 0.2s',
-                        }}></div>
-                      </div>
-                    </label>
+                    <Checkbox
+                      label="Featured Post"
+                      checked={formData.featured}
+                      onChange={(e) => handleInputChange('featured', e.target.checked)}
+                      helper="Show on homepage"
+                    />
                   </div>
                 </FormSection>
               </Card>
@@ -362,7 +371,7 @@ export default function NewPostPage() {
                 
                 <Button
                   type="submit"
-                  variant="success"
+                  variant="primary"
                   loading={createPost.isPending}
                   leftIcon={<Bell className={styles.svgIcon} />}
                 >

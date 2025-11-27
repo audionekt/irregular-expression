@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../client';
+import { API_ENDPOINTS } from '../constants';
 import type {
   TagResponse,
   PageResponse,
@@ -25,7 +26,7 @@ export function useTags(params?: FetchTagsParams) {
     queryKey: tagKeys.list(params),
     queryFn: async () => {
       const response = await apiClient.get<PageResponse<TagResponse>>(
-        '/api/tags',
+        API_ENDPOINTS.TAGS.BASE,
         { params }
       );
       return response.data;
@@ -41,7 +42,7 @@ export function useTag(id: number, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: tagKeys.detail(id),
     queryFn: async () => {
-      const response = await apiClient.get<TagResponse>(`/api/tags/${id}`);
+      const response = await apiClient.get<TagResponse>(API_ENDPOINTS.TAGS.BY_ID(id));
       return response.data;
     },
     staleTime: 10 * 60 * 1000,
@@ -56,7 +57,7 @@ export function useTagBySlug(slug: string, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: tagKeys.detailBySlug(slug),
     queryFn: async () => {
-      const response = await apiClient.get<TagResponse>(`/api/tags/slug/${slug}`);
+      const response = await apiClient.get<TagResponse>(API_ENDPOINTS.TAGS.BY_SLUG(slug));
       return response.data;
     },
     staleTime: 10 * 60 * 1000,
@@ -72,7 +73,7 @@ export function useCreateTag() {
 
   return useMutation({
     mutationFn: async (data: CreateTagRequest) => {
-      const response = await apiClient.post<TagResponse>('/api/tags', data);
+      const response = await apiClient.post<TagResponse>(API_ENDPOINTS.TAGS.BASE, data);
       return response.data;
     },
     onSuccess: () => {
@@ -89,7 +90,7 @@ export function useUpdateTag() {
 
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: UpdateTagRequest }) => {
-      const response = await apiClient.put<TagResponse>(`/api/tags/${id}`, data);
+      const response = await apiClient.put<TagResponse>(API_ENDPOINTS.TAGS.BY_ID(id), data);
       return response.data;
     },
     onSuccess: (updatedTag) => {
@@ -107,7 +108,7 @@ export function useDeleteTag() {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      await apiClient.delete(`/api/tags/${id}`);
+      await apiClient.delete(API_ENDPOINTS.TAGS.BY_ID(id));
       return id;
     },
     onSuccess: (deletedId) => {

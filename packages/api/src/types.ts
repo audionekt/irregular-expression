@@ -165,6 +165,7 @@ export interface CreateBlogPostRequest {
   slug: string;
   excerpt?: string;
   mdxContent: string;
+  authorId: number;
   featuredImageUrl?: string;
   featuredMediaId?: number;
   tagIds?: number[];

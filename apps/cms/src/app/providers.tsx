@@ -25,10 +25,21 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const initMSW = async () => {
-      // Only enable MSW in development mode IN THE BROWSER (not during SSR/build)
+      // Check if we should use real API or MSW
+      // Only use real API if the URL is explicitly set to a valid value
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const shouldUseMSW = !apiUrl || apiUrl.trim() === '' || apiUrl === 'undefined';
+      
+      if (!shouldUseMSW) {
+        console.log('🌐 Using real API:', apiUrl);
+        setMswReady(true);
+        return;
+      }
+
+      // Use MSW for mocked data
       if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
         try {
-          // Dynamically import MSW browser code only in the browser
+          console.log('🔧 No API URL configured - initializing MSW for mocked data');
           const { setupMocks } = await import('@repo/api/mocks');
           await setupMocks();
           console.log('✅ MSW is ready - CMS API calls will be mocked');

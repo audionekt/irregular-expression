@@ -23,6 +23,7 @@ import {
   UserSummaryResponse,
   MediaResponse,
 } from '../types';
+import { API_ENDPOINTS } from '../constants';
 
 // Helper function to create paginated response
 function createPageResponse<T>(
@@ -50,8 +51,8 @@ function createPageResponse<T>(
 
 // Blog Post Handlers
 export const blogPostHandlers = [
-  // GET /api/blog-posts - Get all blog posts with filtering and pagination
-  http.get('/api/blog-posts', ({ request }) => {
+  // GET /api/v1/posts - Get all blog posts with filtering and pagination
+  http.get(API_ENDPOINTS.BLOG_POSTS.BASE, ({ request }) => {
     const url = new URL(request.url);
     const status = url.searchParams.get('status') as PostStatus | null;
     const tagId = url.searchParams.get('tagId');
@@ -91,8 +92,8 @@ export const blogPostHandlers = [
     return HttpResponse.json(createPageResponse(filteredPosts, page, size));
   }),
 
-  // GET /api/blog-posts/:id - Get blog post by ID
-  http.get('/api/blog-posts/:id', ({ params }) => {
+  // GET /api/v1/posts/:id - Get blog post by ID
+  http.get(API_ENDPOINTS.BLOG_POSTS.BY_ID(':id'), ({ params }) => {
     const { id } = params;
     const post = mockBlogPosts.find(p => p.id === parseInt(id as string));
 
@@ -106,8 +107,8 @@ export const blogPostHandlers = [
     return HttpResponse.json(post);
   }),
 
-  // GET /api/blog-posts/slug/:slug - Get blog post by slug
-  http.get('/api/blog-posts/slug/:slug', ({ params }) => {
+  // GET /api/v1/posts/slug/:slug - Get blog post by slug
+  http.get(API_ENDPOINTS.BLOG_POSTS.BY_SLUG(':slug'), ({ params }) => {
     const { slug } = params;
     const post = mockBlogPosts.find(p => p.slug === slug);
 
@@ -124,8 +125,8 @@ export const blogPostHandlers = [
     return HttpResponse.json(post);
   }),
 
-  // POST /api/blog-posts - Create new blog post
-  http.post('/api/blog-posts', async ({ request }) => {
+  // POST /api/v1/posts - Create new blog post
+  http.post(API_ENDPOINTS.BLOG_POSTS.BASE, async ({ request }) => {
     const data = await request.json() as CreateBlogPostRequest;
 
     const author = mockUsers[0]; // Default to first user
@@ -187,8 +188,8 @@ export const blogPostHandlers = [
     return HttpResponse.json(newPost, { status: 201 });
   }),
 
-  // PUT /api/blog-posts/:id - Update blog post
-  http.put('/api/blog-posts/:id', async ({ params, request }) => {
+  // PUT /api/v1/posts/:id - Update blog post
+  http.put(API_ENDPOINTS.BLOG_POSTS.BY_ID(':id'), async ({ params, request }) => {
     const { id } = params;
     const data = await request.json() as UpdateBlogPostRequest;
     const index = mockBlogPosts.findIndex(p => p.id === parseInt(id as string));
@@ -247,8 +248,8 @@ export const blogPostHandlers = [
     return HttpResponse.json(updatedPost);
   }),
 
-  // DELETE /api/blog-posts/:id - Delete blog post
-  http.delete('/api/blog-posts/:id', ({ params }) => {
+  // DELETE /api/v1/posts/:id - Delete blog post
+  http.delete(API_ENDPOINTS.BLOG_POSTS.BY_ID(':id'), ({ params }) => {
     const { id } = params;
     const index = mockBlogPosts.findIndex(p => p.id === parseInt(id as string));
 
@@ -266,8 +267,8 @@ export const blogPostHandlers = [
 
 // Tag Handlers
 export const tagHandlers = [
-  // GET /api/tags - Get all tags with pagination
-  http.get('/api/tags', ({ request }) => {
+  // GET /api/v1/tags - Get all tags with pagination
+  http.get(API_ENDPOINTS.TAGS.BASE, ({ request }) => {
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get('page') || '0');
     const size = parseInt(url.searchParams.get('size') || '20');
@@ -276,8 +277,8 @@ export const tagHandlers = [
     return HttpResponse.json(createPageResponse(sortedTags, page, size));
   }),
 
-  // GET /api/tags/:id - Get tag by ID
-  http.get('/api/tags/:id', ({ params }) => {
+  // GET /api/v1/tags/:id - Get tag by ID
+  http.get(API_ENDPOINTS.TAGS.BY_ID(':id'), ({ params }) => {
     const { id } = params;
     const tag = mockTags.find(t => t.id === parseInt(id as string));
 
@@ -291,8 +292,8 @@ export const tagHandlers = [
     return HttpResponse.json(tag);
   }),
 
-  // GET /api/tags/slug/:slug - Get tag by slug
-  http.get('/api/tags/slug/:slug', ({ params }) => {
+  // GET /api/v1/tags/slug/:slug - Get tag by slug
+  http.get(API_ENDPOINTS.TAGS.BY_SLUG(':slug'), ({ params }) => {
     const { slug } = params;
     const tag = mockTags.find(t => t.slug === slug);
 
@@ -306,8 +307,8 @@ export const tagHandlers = [
     return HttpResponse.json(tag);
   }),
 
-  // POST /api/tags - Create new tag
-  http.post('/api/tags', async ({ request }) => {
+  // POST /api/v1/tags - Create new tag
+  http.post(API_ENDPOINTS.TAGS.BASE, async ({ request }) => {
     const data = await request.json() as CreateTagRequest;
 
     const newTag: TagResponse = {
@@ -323,8 +324,8 @@ export const tagHandlers = [
     return HttpResponse.json(newTag, { status: 201 });
   }),
 
-  // PUT /api/tags/:id - Update tag
-  http.put('/api/tags/:id', async ({ params, request }) => {
+  // PUT /api/v1/tags/:id - Update tag
+  http.put(API_ENDPOINTS.TAGS.BY_ID(':id'), async ({ params, request }) => {
     const { id } = params;
     const data = await request.json() as UpdateTagRequest;
     const index = mockTags.findIndex(t => t.id === parseInt(id as string));
@@ -357,8 +358,8 @@ export const tagHandlers = [
     return HttpResponse.json(updatedTag);
   }),
 
-  // DELETE /api/tags/:id - Delete tag
-  http.delete('/api/tags/:id', ({ params }) => {
+  // DELETE /api/v1/tags/:id - Delete tag
+  http.delete(API_ENDPOINTS.TAGS.BY_ID(':id'), ({ params }) => {
     const { id } = params;
     const index = mockTags.findIndex(t => t.id === parseInt(id as string));
 
