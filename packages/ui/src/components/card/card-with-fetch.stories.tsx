@@ -45,18 +45,43 @@ function BlogPostFetcher() {
 
   if (loading) {
     return (
-      <Card className="max-w-2xl">
-        <Typography variant="p">⏳ Loading... (Check console!)</Typography>
+      <Card style={{ maxWidth: '800px' }} variant="elevated">
+        <div style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ height: '16px', width: '80px', backgroundColor: '#e7e5e4', borderRadius: '9999px' }}></div>
+          </div>
+          <div style={{ height: '32px', backgroundColor: '#e7e5e4', borderRadius: '4px', width: '75%', marginBottom: '16px' }}></div>
+          <div style={{ marginBottom: '16px' }}>
+            <div style={{ height: '16px', backgroundColor: '#e7e5e4', borderRadius: '4px', width: '100%', marginBottom: '8px' }}></div>
+            <div style={{ height: '16px', backgroundColor: '#e7e5e4', borderRadius: '4px', width: '83%' }}></div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '16px', borderTop: '1px solid #e7e5e4', marginBottom: '16px' }}>
+            <div style={{ height: '40px', width: '40px', backgroundColor: '#e7e5e4', borderRadius: '50%' }}></div>
+            <div style={{ flex: 1 }}>
+              <div style={{ height: '16px', backgroundColor: '#e7e5e4', borderRadius: '4px', width: '128px', marginBottom: '8px' }}></div>
+              <div style={{ height: '12px', backgroundColor: '#e7e5e4', borderRadius: '4px', width: '96px' }}></div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ height: '24px', width: '80px', backgroundColor: '#e7e5e4', borderRadius: '9999px' }}></div>
+            <div style={{ height: '24px', width: '96px', backgroundColor: '#e7e5e4', borderRadius: '9999px' }}></div>
+          </div>
+        </div>
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card className="max-w-2xl">
-        <Typography variant="p" className="text-red-600">
-          ❌ Error: {error.message}
-        </Typography>
+      <Card style={{ maxWidth: '800px' }} variant="outlined">
+        <div style={{ padding: '24px', backgroundColor: '#fef2f2', borderRadius: '8px', border: '1px solid #fecaca' }}>
+          <Typography variant="h3" style={{ color: '#b91c1c', marginBottom: '8px' }}>
+            ⚠️ Failed to Load
+          </Typography>
+          <Typography variant="p" style={{ color: '#dc2626' }}>
+            {error.message}
+          </Typography>
+        </div>
       </Card>
     );
   }
@@ -65,61 +90,74 @@ function BlogPostFetcher() {
 
   if (!post) {
     return (
-      <Card className="max-w-2xl">
-        <Typography variant="p">No posts found</Typography>
+      <Card style={{ maxWidth: '800px' }} variant="outlined">
+        <div style={{ padding: '32px', textAlign: 'center' }}>
+          <Typography variant="h3" style={{ marginBottom: '8px', color: '#716c66' }}>
+            📭 No Posts Found
+          </Typography>
+          <Typography variant="p" style={{ color: '#a39e98' }}>
+            There are no blog posts available at the moment.
+          </Typography>
+        </div>
       </Card>
     );
   }
 
   return (
-    <Card className="max-w-2xl">
-      <div className="flex items-start justify-between mb-3">
-        <Typography 
-          variant="h2" 
-          className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-        >
-          {post.title}
-        </Typography>
+    <Card style={{ maxWidth: '800px' }} variant="elevated">
+      {/* Header: Avatar, Title and Featured Badge in one row */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '12px' }}>
+        <Avatar
+          src={post.author?.avatarUrl}
+          alt={`${post.author?.firstName} ${post.author?.lastName}`}
+          size="md"
+        />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <Typography 
+            variant="h2" 
+            style={{ cursor: 'pointer' }}
+          >
+            {post.title}
+          </Typography>
+        </div>
         {post.featured && (
-          <Chip variant="featured" size="md" className="ml-2">
+          <Chip color="gold" size="sm">
             Featured
           </Chip>
         )}
       </div>
 
+      {/* Excerpt */}
       {post.excerpt && (
-        <Typography variant="p" className="mb-4">
+        <Typography variant="p" style={{ marginBottom: '16px', color: '#716c66' }}>
           {post.excerpt}
         </Typography>
       )}
 
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Avatar
-            src={post.author?.avatarUrl}
-            alt={`${post.author?.firstName} ${post.author?.lastName}`}
-            size="sm"
-          />
-          <Typography variant="caption">
-            {post.author?.firstName} {post.author?.lastName}
-          </Typography>
-        </div>
+      {/* Author Name */}
+      <Typography variant="p" style={{ fontWeight: 600, marginBottom: '8px' }}>
+        {post.author?.firstName} {post.author?.lastName}
+      </Typography>
 
-        <Typography variant="caption">•</Typography>
-        <Typography variant="caption">{post.viewCount?.toLocaleString()} views</Typography>
-
+      {/* Views and Reading Time */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '0.875rem', color: '#716c66' }}>
+        <span>{post.viewCount?.toLocaleString()} views</span>
         {post.readingTimeMinutes && (
           <>
-            <Typography variant="caption">•</Typography>
-            <Typography variant="caption">{post.readingTimeMinutes} min read</Typography>
+            <span>•</span>
+            <span>{post.readingTimeMinutes} min read</span>
           </>
         )}
       </div>
 
-      <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded">
-        <Typography variant="caption" className="text-green-700 dark:text-green-400">
-          ✅ This data was fetched from /api/blog-posts and mocked by MSW!
-        </Typography>
+      {/* MSW Success Badge */}
+      <div style={{ padding: '16px', backgroundColor: '#ecfdf5', borderRadius: '8px', border: '1px solid #a7f3d0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '1.125rem' }}>✅</span>
+          <Typography variant="p" style={{ color: '#047857', fontWeight: 500 }}>
+            Data fetched from /api/blog-posts and mocked by MSW!
+          </Typography>
+        </div>
       </div>
     </Card>
   );
@@ -128,10 +166,12 @@ function BlogPostFetcher() {
 // Story 1: Success - Uses default MSW handlers
 export const FetchSuccess: Story = {
   render: () => (
-    <div>
-      <Typography variant="p" className="mb-4 text-center">
-        Open DevTools Console to see MSW intercepting the API call! 👇
-      </Typography>
+    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#eff6ff', borderRadius: '8px', border: '1px solid #bfdbfe' }}>
+        <Typography variant="p" style={{ color: '#1e40af' }}>
+          💡 <strong>Tip:</strong> Open DevTools Console to see MSW intercepting the API call in real-time!
+        </Typography>
+      </div>
       <BlogPostFetcher />
     </div>
   ),
@@ -223,10 +263,12 @@ export const FetchError: Story = {
     },
   },
   render: () => (
-    <div>
-      <Typography variant="p" className="mb-4 text-center">
-        MSW is returning a 500 error for this story! 👇
-      </Typography>
+    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#fef2f2', borderRadius: '8px', border: '1px solid #fecaca' }}>
+        <Typography variant="p" style={{ color: '#991b1b' }}>
+          ⚠️ <strong>Simulated Error:</strong> MSW is returning a 500 error for this story!
+        </Typography>
+      </div>
       <BlogPostFetcher />
     </div>
   ),
@@ -251,10 +293,12 @@ export const FetchEmpty: Story = {
     },
   },
   render: () => (
-    <div>
-      <Typography variant="p" className="mb-4 text-center">
-        MSW is returning an empty array! 👇
-      </Typography>
+    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#f5f5f4', borderRadius: '8px', border: '1px solid #e7e5e4' }}>
+        <Typography variant="p" style={{ color: '#3f3b37' }}>
+          📭 <strong>Empty State:</strong> MSW is returning an empty array to simulate no content!
+        </Typography>
+      </div>
       <BlogPostFetcher />
     </div>
   ),

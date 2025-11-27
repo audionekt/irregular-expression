@@ -6,6 +6,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
   variant?: 'default' | 'outlined' | 'featured' | 'success' | 'warning' | 'error';
   size?: 'sm' | 'md' | 'lg';
+  color?: 'amethyst' | 'sky' | 'ruby' | 'sage' | 'gold' | 'charcoal';
   dismissible?: boolean;
   onDismiss?: () => void;
 }
@@ -13,6 +14,7 @@ export interface ChipProps extends React.HTMLAttributes<HTMLSpanElement> {
 export function Chip({ 
   variant = 'default',
   size = 'md',
+  color,
   className,
   children,
   dismissible = false,
@@ -24,7 +26,7 @@ export function Chip({
     <span
       className={cn(
         styles.chip,
-        styles.variants[variant],
+        color ? styles.colors[color] : styles.variants[variant],
         styles.sizes[size],
         (onClick || dismissible) && styles.clickable,
         className

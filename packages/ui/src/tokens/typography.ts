@@ -1,7 +1,7 @@
 // Aurigami Typography System
 
 export const fontFamily = {
-  sans: "'Merge One', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  sans: "'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   mono: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
 } as const;
 

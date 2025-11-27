@@ -78,6 +78,5 @@ globalStyle('img, svg', {
 // Focus styles
 globalStyle(':focus-visible', {
   outline: `2px solid ${vars.color.semantic.brand.accent}`,
-  outlineOffset: '2px',
 });
 

@@ -109,6 +109,22 @@ export const PrimitiveTerracotta: Story = {
   render: () => <ColorScale title="Terracotta" scale={colors.primitive.terracotta} />,
 };
 
+export const PrimitiveAmethyst: Story = {
+  render: () => <ColorScale title="Amethyst" scale={colors.primitive.amethyst} />,
+};
+
+export const PrimitiveSky: Story = {
+  render: () => <ColorScale title="Sky" scale={colors.primitive.sky} />,
+};
+
+export const PrimitiveRuby: Story = {
+  render: () => <ColorScale title="Ruby" scale={colors.primitive.ruby} />,
+};
+
+export const PrimitiveAzul: Story = {
+  render: () => <ColorScale title="Azul" scale={colors.primitive.azul} />,
+};
+
 export const AllPrimitives: Story = {
   render: () => (
     <div>
@@ -122,6 +138,10 @@ export const AllPrimitives: Story = {
       <ColorScale title="Gold" scale={colors.primitive.gold} />
       <ColorScale title="Sage" scale={colors.primitive.sage} />
       <ColorScale title="Terracotta" scale={colors.primitive.terracotta} />
+      <ColorScale title="Amethyst" scale={colors.primitive.amethyst} />
+      <ColorScale title="Sky" scale={colors.primitive.sky} />
+      <ColorScale title="Ruby" scale={colors.primitive.ruby} />
+      <ColorScale title="Azul" scale={colors.primitive.azul} />
     </div>
   ),
 };
@@ -177,6 +197,39 @@ export const AllSemanticColors: Story = {
   ),
 };
 
+export const ColorPalette: Story = {
+  render: () => (
+    <div>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: '#1a1816' }}>
+        Complete Color Palette
+      </h2>
+      <p style={{ marginBottom: '2rem', color: '#58534e', lineHeight: 1.6 }}>
+        All 8 primitive color scales in the Aurigami design system.
+      </p>
+      <div style={{ display: 'grid', gap: '3rem' }}>
+        <div>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', color: '#1a1816' }}>
+            Neutrals & Warm Tones
+          </h3>
+          <ColorScale title="Charcoal" scale={colors.primitive.charcoal} />
+          <ColorScale title="Gold" scale={colors.primitive.gold} />
+          <ColorScale title="Sage" scale={colors.primitive.sage} />
+          <ColorScale title="Terracotta" scale={colors.primitive.terracotta} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', color: '#1a1816' }}>
+            Accent Colors
+          </h3>
+          <ColorScale title="Amethyst" scale={colors.primitive.amethyst} />
+          <ColorScale title="Sky" scale={colors.primitive.sky} />
+          <ColorScale title="Ruby" scale={colors.primitive.ruby} />
+          <ColorScale title="Azul" scale={colors.primitive.azul} />
+        </div>
+      </div>
+    </div>
+  ),
+};
+
 export const ColorUsageExample: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -187,7 +240,7 @@ export const ColorUsageExample: Story = {
       {/* Primary Button */}
       <div>
         <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#58534e' }}>
-          Primary Button
+          Primary Button (Amethyst)
         </h3>
         <button style={{
           backgroundColor: colors.semantic.brand.primary,
@@ -201,6 +254,36 @@ export const ColorUsageExample: Story = {
         }}>
           Click Me
         </button>
+      </div>
+
+      {/* Colored Chips */}
+      <div>
+        <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#58534e' }}>
+          Chip Colors
+        </h3>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {[
+            { name: 'Amethyst', color: colors.primitive.amethyst },
+            { name: 'Sky', color: colors.primitive.sky },
+            { name: 'Ruby', color: colors.primitive.ruby },
+            { name: 'Sage', color: colors.primitive.sage },
+            { name: 'Gold', color: colors.primitive.gold },
+          ].map(({ name, color }) => (
+            <span
+              key={name}
+              style={{
+                backgroundColor: color[100],
+                color: color[800],
+                padding: '0.375rem 0.75rem',
+                borderRadius: '9999px',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+              }}
+            >
+              {name}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Card */}

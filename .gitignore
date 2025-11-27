@@ -70,6 +70,10 @@ storybook-static/
 .parcel-cache/
 .eslintcache
 
+# Vite
+*.timestamp-*.mjs
+vite.config.*.timestamp-*.mjs
+
 # OS
 Thumbs.db
 

@@ -1,10 +1,3 @@
-/* Merge One font via @font-face */
-/* Loading from CDNfonts.com */
-@font-face {
-  font-family: 'Merge One';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('https://fonts.cdnfonts.com/s/15936/MergeOne-Regular.woff') format('woff');
-}
+/* Figtree font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap');
 
