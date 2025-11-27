@@ -69,6 +69,33 @@ export const variants = styleVariants({
   },
 });
 
+export const colors = styleVariants({
+  amethyst: {
+    backgroundColor: vars.color.primitive.amethyst[100],
+    color: vars.color.primitive.amethyst[800],
+  },
+  sky: {
+    backgroundColor: vars.color.primitive.sky[100],
+    color: vars.color.primitive.sky[800],
+  },
+  ruby: {
+    backgroundColor: vars.color.primitive.ruby[100],
+    color: vars.color.primitive.ruby[800],
+  },
+  sage: {
+    backgroundColor: vars.color.primitive.sage[100],
+    color: vars.color.primitive.sage[800],
+  },
+  gold: {
+    backgroundColor: vars.color.primitive.gold[100],
+    color: vars.color.primitive.gold[800],
+  },
+  charcoal: {
+    backgroundColor: vars.color.primitive.charcoal[200],
+    color: vars.color.primitive.charcoal[800],
+  },
+});
+
 export const dismissButton = style({
   display: 'flex',
   alignItems: 'center',

@@ -7,7 +7,7 @@ export const button = style({
   alignItems: 'center',
   justifyContent: 'center',
   gap: vars.space[2],
-  borderRadius: vars.radius.lg,
+  borderRadius: vars.radius.sm,
   fontWeight: globalTokens.font.weight.semibold,
   fontFamily: globalTokens.font.family.sans,
   transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,
@@ -15,11 +15,6 @@ export const button = style({
   border: 'none',
   textDecoration: 'none',
   userSelect: 'none',
-  
-  ':focus-visible': {
-    outline: `2px solid ${vars.color.semantic.brand.accent}`,
-    outlineOffset: '2px',
-  },
   
   ':disabled': {
     opacity: 0.5,
@@ -43,19 +38,31 @@ export const variants = styleVariants({
     ':active': {
       backgroundColor: vars.color.semantic.brand.primaryActive,
     },
+    
+    ':focus-visible': {
+      outline: `3px solid ${vars.color.primitive.amethyst[400]}`,
+      outlineOffset: '2px',
+    },
   },
   secondary: {
-    backgroundColor: vars.color.semantic.background.base,
+    backgroundColor: 'transparent',
     color: vars.color.semantic.foreground.primary,
     border: `2px solid ${vars.color.semantic.border.default}`,
     
     ':hover': {
       backgroundColor: vars.color.semantic.background.subtle,
       borderColor: vars.color.semantic.border.strong,
+      color: vars.color.semantic.foreground.primary,
     },
     
     ':active': {
       backgroundColor: vars.color.semantic.background.muted,
+      borderColor: vars.color.semantic.border.strong,
+    },
+    
+    ':focus-visible': {
+      outline: `3px solid ${vars.color.primitive.amethyst[400]}`,
+      outlineOffset: '2px',
     },
   },
   ghost: {
@@ -69,6 +76,12 @@ export const variants = styleVariants({
     
     ':active': {
       backgroundColor: vars.color.semantic.background.muted,
+      color: vars.color.semantic.foreground.primary,
+    },
+    
+    ':focus-visible': {
+      outline: `3px solid ${vars.color.primitive.amethyst[400]}`,
+      outlineOffset: '2px',
     },
   },
   danger: {
@@ -84,6 +97,11 @@ export const variants = styleVariants({
     ':active': {
       backgroundColor: vars.color.semantic.error.text,
     },
+    
+    ':focus-visible': {
+      outline: `3px solid ${vars.color.primitive.terracotta[400]}`,
+      outlineOffset: '2px',
+    },
   },
   success: {
     backgroundColor: vars.color.semantic.success.base,
@@ -97,6 +115,11 @@ export const variants = styleVariants({
     
     ':active': {
       backgroundColor: vars.color.semantic.success.text,
+    },
+    
+    ':focus-visible': {
+      outline: `3px solid ${vars.color.primitive.sage[400]}`,
+      outlineOffset: '2px',
     },
   },
 });

@@ -1,6 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css';
 import { vars } from './contract.css';
-import { globalTokens } from './theme.css';
+import { globalTokens, lightTheme } from './theme.css';
 
 // CSS Reset
 globalStyle('*, *::before, *::after', {
@@ -15,7 +15,7 @@ globalStyle('html', {
   fontFamily: globalTokens.font.family.sans,
 });
 
-globalStyle('body', {
+globalStyle(`body, body.${lightTheme}`, {
   margin: 0,
   fontFamily: globalTokens.font.family.sans,
   fontSize: globalTokens.font.size.base,
@@ -78,6 +78,5 @@ globalStyle('img, svg', {
 // Focus styles
 globalStyle(':focus-visible', {
   outline: `2px solid ${vars.color.semantic.brand.accent}`,
-  outlineOffset: '2px',
 });
 

@@ -117,6 +117,38 @@ jest.mock('aurigami', () => ({
   Chip: ({ children, onClick, variant }: any) => (
     <span onClick={onClick} data-variant={variant}>{children}</span>
   ),
+  Dropdown: ({ label, value, onChange, options, getItemLabel, placeholder }: any) => (
+    <div>
+      <label>{label}</label>
+      <select 
+        value={value || ''} 
+        onChange={(e) => {
+          const targetValue = e.target.value;
+          const selectedValue = options.find((opt: any) => {
+            // For objects with id (like tags)
+            if (opt.id && opt.id.toString() === targetValue) return true;
+            // For primitive values (like status strings)
+            if (opt === targetValue) return true;
+            return false;
+          });
+          onChange(selectedValue);
+        }} 
+        aria-label={label}
+      >
+        <option value="">{placeholder || 'Select...'}</option>
+        {options.map((opt: any, idx: number) => {
+          const optLabel = getItemLabel ? getItemLabel(opt) : opt;
+          // Use id for objects, otherwise use the raw value
+          const optValue = opt.id ? opt.id.toString() : opt;
+          return (
+            <option key={idx} value={optValue}>
+              {optLabel}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  ),
 }));
 
 function createTestQueryClient() {
