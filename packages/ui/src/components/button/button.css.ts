@@ -7,7 +7,7 @@ export const button = style({
   alignItems: 'center',
   justifyContent: 'center',
   gap: vars.space[2],
-  borderRadius: vars.radius.sm,
+  borderRadius: vars.radius.lg,
   fontWeight: globalTokens.font.weight.semibold,
   fontFamily: globalTokens.font.family.sans,
   transition: `all ${vars.transition.duration.base} ${vars.transition.easing.inOut}`,

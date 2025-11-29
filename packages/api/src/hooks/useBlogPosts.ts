@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../client';
+import { API_ENDPOINTS } from '../constants';
 import type {
   BlogPostResponse,
   BlogPostSummaryResponse,
@@ -36,7 +37,7 @@ export function useBlogPosts(params?: FetchBlogPostsParams) {
     queryKey: blogPostKeys.list(params),
     queryFn: async () => {
       const response = await apiClient.get<PageResponse<BlogPostSummaryResponse>>(
-        '/api/blog-posts',
+        API_ENDPOINTS.BLOG_POSTS.BASE,
         { params }
       );
       return response.data;
@@ -58,7 +59,7 @@ export function useBlogPost(id: number, options?: { enabled?: boolean }) {
     queryKey: blogPostKeys.detail(id),
     queryFn: async () => {
       const response = await apiClient.get<BlogPostResponse>(
-        `/api/blog-posts/${id}`
+        API_ENDPOINTS.BLOG_POSTS.BY_ID(id)
       );
       return response.data;
     },
@@ -80,7 +81,7 @@ export function useBlogPostBySlug(slug: string, options?: { enabled?: boolean })
     queryKey: blogPostKeys.detailBySlug(slug),
     queryFn: async () => {
       const response = await apiClient.get<BlogPostResponse>(
-        `/api/blog-posts/slug/${slug}`
+        API_ENDPOINTS.BLOG_POSTS.BY_SLUG(slug)
       );
       return response.data;
     },
@@ -111,9 +112,12 @@ export function useCreateBlogPost() {
 
   return useMutation({
     mutationFn: async (data: CreateBlogPostRequest) => {
+      // Extract authorId from data and send as query param
+      const { authorId, ...requestBody } = data;
+      
       const response = await apiClient.post<BlogPostResponse>(
-        '/api/blog-posts',
-        data
+        `${API_ENDPOINTS.BLOG_POSTS.BASE}?authorId=${authorId}`,
+        requestBody
       );
       return response.data;
     },
@@ -145,7 +149,7 @@ export function useUpdateBlogPost() {
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: UpdateBlogPostRequest }) => {
       const response = await apiClient.put<BlogPostResponse>(
-        `/api/blog-posts/${id}`,
+        API_ENDPOINTS.BLOG_POSTS.BY_ID(id),
         data
       );
       return response.data;
@@ -185,7 +189,7 @@ export function useDeleteBlogPost() {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      await apiClient.delete(`/api/blog-posts/${id}`);
+      await apiClient.delete(API_ENDPOINTS.BLOG_POSTS.BY_ID(id));
       return id;
     },
     onSuccess: (deletedId) => {

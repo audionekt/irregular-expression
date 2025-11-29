@@ -80,8 +80,6 @@ export const formActions = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.space[3],
-  paddingTop: vars.space[4],
-  borderTop: `1px solid ${vars.color.semantic.border.default}`,
 });
 
 export const formActionsAlign = styleVariants({
