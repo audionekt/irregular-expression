@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState, useEffect } from 'react';
 
-// Create a client
-const queryClient = new QueryClient({
+// Constants
+const QUERY_CLIENT_CONFIG = {
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000, // 1 minute
@@ -13,7 +13,20 @@ const queryClient = new QueryClient({
       retry: 1,
     },
   },
-});
+};
+
+// Create a client
+const queryClient = new QueryClient(QUERY_CLIENT_CONFIG);
+
+// Helper functions
+function shouldUseMockAPI(): boolean {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  return !apiUrl || apiUrl.trim() === '' || apiUrl === 'undefined';
+}
+
+function isClientSideDevelopment(): boolean {
+  return typeof window !== 'undefined' && process.env.NODE_ENV === 'development';
+}
 
 /**
  * Providers component that sets up:
@@ -24,65 +37,63 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [mswReady, setMswReady] = useState(false);
 
   useEffect(() => {
-    const initMSW = async () => {
-      // Check if we should use real API or MSW
-      // Only use real API if the URL is explicitly set to a valid value
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const shouldUseMSW = !apiUrl || apiUrl.trim() === '' || apiUrl === 'undefined';
-      
-      if (!shouldUseMSW) {
-        console.log('🌐 Using real API:', apiUrl);
-        setMswReady(true);
-        return;
-      }
-
-      // Use MSW for mocked data
-      if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-        try {
-          console.log('🔧 No API URL configured - initializing MSW for mocked data');
-          const { setupMocks } = await import('@repo/api/mocks');
-          await setupMocks();
-          console.log('✅ MSW is ready - CMS API calls will be mocked');
-        } catch (error) {
-          console.error('Failed to initialize MSW:', error);
-        }
-      }
-      setMswReady(true);
-    };
-
-    initMSW();
+    initializeMSW();
   }, []);
 
-  // Show loading state while MSW initializes
+  async function initializeMSW() {
+    if (!shouldUseMockAPI()) {
+      console.log('🌐 Using real API:', process.env.NEXT_PUBLIC_API_URL);
+      setMswReady(true);
+      return;
+    }
+
+    if (isClientSideDevelopment()) {
+      try {
+        console.log('🔧 No API URL configured - initializing MSW for mocked data');
+        const { setupMocks } = await import('@repo/api/mocks');
+        await setupMocks();
+        console.log('✅ MSW is ready - CMS API calls will be mocked');
+      } catch (error) {
+        console.error('Failed to initialize MSW:', error);
+      }
+    }
+    
+    setMswReady(true);
+  }
+
   if (!mswReady) {
-    return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        fontSize: '18px',
-        color: '#666',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-      }}>
-        <div>
-          <div style={{ marginBottom: '8px' }}>🔄 Initializing CMS...</div>
-          <div style={{ fontSize: '14px', color: '#999' }}>
-            Setting up Mock Service Worker
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {/* React Query Devtools - only in development */}
       {process.env.NODE_ENV === 'development' && (
         <ReactQueryDevtools initialIsOpen={false} />
       )}
     </QueryClientProvider>
+  );
+}
+
+// Component: Loading Screen
+function LoadingScreen() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
+      fontSize: '18px',
+      color: '#666',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+    }}>
+      <div>
+        <div style={{ marginBottom: '8px' }}>🔄 Initializing CMS...</div>
+        <div style={{ fontSize: '14px', color: '#999' }}>
+          Setting up Mock Service Worker
+        </div>
+      </div>
+    </div>
   );
 }
 
